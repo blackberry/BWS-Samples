@@ -1,0 +1,75 @@
+Initializing web services...
+Entering setup()
+Mar 21, 2012 2:21:11 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+Mar 21, 2012 2:21:15 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+Entering getAuthenticator()
+Calling _bwsUtil.getAuthenticators()...
+..._bwsUtil.getAuthenticators() returned "SUCCESS"
+Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+Entering getEncodedUserName()
+Calling _bwsUtil.getEncodedUsername()...
+..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+Exiting getEncodedUserName() with value "5,0,0,1,1,0;admin00"
+Exiting setup() with value "true"
+Getting system information...
+Entering getSystemInfo()
+Calling _bws.getSystemInfo()...
+..._bws.getSystemInfo() returned "SUCCESS"
+_bws.getSystemInfo() Execution Time: 0.1356 seconds
+_bws.getSystemInfo() Request UID: bf7dce44-2e25-47ea-9078-5c41a9cb8fed
+_bws.getSystemInfo() returned the following properties:
+BWS Version: 6.0.0.262
+BAS Version: 6.0.0.265
+Mail Platform: Unknown
+Authenticated User Uid: 1
+Supports PlayBook: Yes
+Exiting getSystemInfo() with value "true"
+Creating a user...
+Entering createUser()
+Creating a user with email address ""ate-ob-0001@atemd01.ate.sw.rim.net""
+Calling _bws.createUsers()...
+..._bws.createUsers() returned "SUCCESS"
+User created with UID "5" using Email Address ""ate-ob-0001@atemd01.ate.sw.rim.net""
+Exiting createUser() with value "true"
+Displaying a user's details...
+Entering displayUserDetails()
+Displaying details for user with email address ""ATE-EX10-01-0525@ate.sw.rim.net""
+Entering getUser()
+Calling _bws.getUsers()...
+..._bws.getUsers() returned "SUCCESS"
+Exiting getUser() with User object (UID "2")
+Calling _bws.getUsersDetail()...
+..._bws.getUsersDetail() returned "SUCCESS"
+User details:
+Display Name: ATE-EX10-01 0525
+User UID: 2
+Last Login Time: 03/19/2012 18:03:58
+Indirect IT policy names: Default
+User's device details:
+Device 1 data
+---------------
+PIN: 500CAFA9
+Model: PB 16GB WIFI
+Phone Number: 
+Active Carrier: 
+Network: Wi-Fi
+Serial Number: 0
+State: RUNNING
+IT Policy Name: Default
+Platform Version: 2.0.1.190 (Platform 2.0.1.190)
+Total Messages Expired: 0
+Total Messages Filtered: 0
+Total Messages Forwarded: 0
+Total Messages Pending: 0
+Total Messages Sent: 0
+---------------
+User's account details:
+Account 1 data
+---------------
+Email Address: ATE-EX10-01-0525@ate.sw.rim.net
+---------------
+Exiting displayUserDetails() with value "true"
+Press Enter to exit
+
