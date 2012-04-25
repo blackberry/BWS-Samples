@@ -24,10 +24,10 @@ Supports PlayBook: Yes
 Exiting GetSystemInfo() with value "True"
 Creating a user...
 Entering CreateUser()
-Creating a user with email address ""ate-ob-0001@atemd01.ate.sw.rim.net""
+Creating a user with email address ""user01@example.net""
 Calling bwsService.createUsers()...
 ...bwsService.createUsers() returned "SUCCESS"
-User created with UID "7" using Email Address ""ate-ob-0001@atemd01.ate.sw.rim.net""
+User created with UID "7" using Email Address ""user01@example.net""
 Exiting CreateUser() with value "True"
 Displaying a user's details...
 Entering DisplayUserDetails()
@@ -35,18 +35,18 @@ Entering GetUser()
 Calling bwsService.getUsers()...
 ...bwsService.getUsers() returned "SUCCESS"
 Exiting GetUser() with User object (UID "2")
-Displaying details for user with email address ""ATE-EX10-01-0525@ate.sw.rim.net""
+Displaying details for user with email address ""user01@example.net""
 Calling bwsService.getUsersDetail()...
 ...bwsService.getUsersDetail() returned "SUCCESS"
 User details:
-Display Name: ATE-EX10-01 0525
+Display Name: User 01
 User UID: 2
 Last Login Time: 03/19/2012 18:03:58
 Indirect IT policy names: Default
 User's device details:
 Device 1 data
 ---------------
-PIN: 500CAFA9
+PIN: 12G34H56
 Model: PB 16GB WIFI
 Phone Number:
 Active Carrier:
@@ -54,7 +54,7 @@ Network: Wi-Fi
 Serial Number: 0
 State: RUNNING
 IT Policy Name: Default
-Platform Version: 2.0.1.190 (Platform 2.0.1.190)
+Platform Version: 2.0.0.190 (Platform 2.0.0.190)
 Total Messages Expired: 0
 Total Messages Filtered: 0
 Total Messages Forwarded: 0
@@ -64,7 +64,7 @@ Total Messages Sent: 0
 User's account details:
 Account 1 data
 ---------------
-Email Address: ATE-EX10-01-0525@ate.sw.rim.net
+Email Address: user01@example.net
 ---------------
 Exiting DisplayUserDetails() with value "True"
 Press Enter to exit
