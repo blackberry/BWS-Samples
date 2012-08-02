@@ -12,6 +12,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
  * See the License for the specific language governing permissions and 
  * limitations under the License. 
+ *
+ * It is a best practice to use Apache CXF 2.1.10 or later
  */
 import com.rim.ws.enterprise.admin.*;
 import java.io.FileOutputStream;
@@ -22,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
+import javax.xml.namespace.QName;
 
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
@@ -30,17 +33,17 @@ import org.apache.cxf.transport.http.HTTPException;
 import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 
 /*
- * SampleBwsClient.java
- * 
- * A program that demonstrates BlackBerry Web Services (BWS) for Enterprise Administration APIs.
- * 
- * This sample program demonstrates how to get system information to make an authenticated API call. If successful, the
- * program then optionally creates a user and optionally displays the user's details. If the authenticated API is not
- * successful, the program displays a message indicating that the failure has occurred.
- * 
- * 
- * This program was tested against the BlackBerry Device Service version 6.0.0.
- */ 
+* SampleBwsClient.java
+*
+* A program that demonstrates BlackBerry Web Services (BWS) for Enterprise Administration APIs.
+*
+* This sample program demonstrates how to get system information to make an authenticated API call. If successful, the
+* program then optionally creates a user and optionally displays the user's details. If the authenticated API is not
+* successful, the program displays a message indicating that the failure has occurred.
+*
+*
+* This program was tested against the BlackBerry Device Service version 6.0.0, and the BlackBerry Enterprise Server version 5.0.3 MR5.
+*/ 
  
 public class SampleBwsClient
 {
@@ -52,7 +55,7 @@ public class SampleBwsClient
 	// The request Metadata information. 
 	// This is the version of the WSDL used to generate the proxy, not the version of the server.
 	private final static String CLIENT_VERSION = "6.0.0";
-	
+
 	/* 
 	 * To use a different locale, call getLocales() in the BWSUtilService web service
 	 * to see which locales are supported. 
@@ -131,7 +134,7 @@ public class SampleBwsClient
 		_bwsService = new BWSService(null, serviceBWS);
 		_bwsService.addPort(portBWS, "http://schemas.xmlsoap.org/soap/", bwsServiceUrl.toString());
 		_bws = _bwsService.getPort(portBWS,BWS.class);
-		
+
 		QName serviceUtil = new QName("http://ws.rim.com/enterprise/admin", "BWSUtilService");
 		QName portUtil = new QName("http://ws.rim.com/enterprise/admin", "BWSUtil");
 		_bwsUtilService = new BWSUtilService(null, serviceUtil);
@@ -312,7 +315,7 @@ public class SampleBwsClient
 		GetUsersSearchCriteria searchCriteria = new GetUsersSearchCriteria();
 
 		// Note: Email searches are not case-sensitive. Wildcards and prefix or suffix matching are supported.
-		
+
 		/* 
 		 * Check if the value of the variable "DISPLAY_USER_DETAIL_EMAIL" is enclosed in double-quotes, and if it's not,
 		 * then display a message. If the variable "DISPLAY_USER_DETAIL_EMAIL" is not enclosed in double-quotes, then a
@@ -443,8 +446,7 @@ public class SampleBwsClient
 
 					if (userDetail.getDirectITPolicy() != null && userDetail.getDirectITPolicy().getPolicy() != null)
 					{
-						System.out.format("Direct IT policy name: %s%n", userDetail.getDirectITPolicy().getPolicy()
-																					.getName());
+						System.out.format("Direct IT policy name: %s%n", userDetail.getDirectITPolicy().getPolicy().getName());
 					}
 
 					/*
@@ -464,17 +466,23 @@ public class SampleBwsClient
 							System.out.format("PIN: %s%n", device.getPin());
 							System.out.format("Model: %s%n", device.getModel());
 							System.out.format("Phone Number: %s%n", device.getPhoneNumber());
+							
+							/*The following 3 lines are valid for BlackBerry Enterprise Server 5.0.3 MR5 or later*/
 							System.out.format("Active Carrier: %s%n", device.getActiveCarrier());
 							System.out.format("Network: %s%n", device.getNetwork());
 							System.out.format("Serial Number: %s%n", device.getSerialNumber());
+							
 							System.out.format("State: %s%n", device.getState().getValue());
 							System.out.format("IT Policy Name: %s%n", device.getItPolicyName());
+							
+							/*The following 6 lines are valid for BlackBerry Enterprise Server 5.0.3 MR5 or later*/
 							System.out.format("Platform Version: %s%n", device.getPlatformVersion());
 							System.out.format("Total Messages Expired: %s%n", device.getTotalMessagesExpired());
 							System.out.format("Total Messages Filtered: %s%n", device.getTotalMessagesFiltered());
 							System.out.format("Total Messages Forwarded: %s%n", device.getTotalMessagesForwarded());
 							System.out.format("Total Messages Pending: %s%n", device.getTotalMessagesPending());
 							System.out.format("Total Messages Sent: %s%n", device.getTotalMessagesSent());
+							
 							System.out.format("---------------%n");
 						}
 					}
@@ -545,7 +553,7 @@ public class SampleBwsClient
 		createUsersRequest.setMetadata(REQUEST_METADATA);
 
 		NewUser newUser = new NewUser();
-		
+
 		// To create an administrator user, create and set the "UserAttributes".
 		AccountAttributes accountAttributes = new AccountAttributes();
 
@@ -626,6 +634,8 @@ public class SampleBwsClient
 		 * properties about the current user, like the Authenticated User Uid property. The Authenticated User Uid
 		 * property is often used to make self-service calls to APIs like getUsersDetail(), setUsersAutoSignature() and
 		 * others.
+		 *
+		 * Valid for BlackBerry Enterprise Server 5.0.3 MR5 or later
 		 */
 		request.setLoadAuthenticatedUserProperties(true);
 		request.setMetadata(REQUEST_METADATA);
@@ -640,8 +650,7 @@ public class SampleBwsClient
 		{
 			System.err.format(String.format("Calling %s...%n", BWS_API_NAME));
 			response = _bws.getSystemInfo(request);
-			System.err.format(String.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus()
-																								.getCode()));
+			System.err.format(String.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode()));
 		}
 		catch (WebServiceException e)
 		{
