@@ -16,12 +16,15 @@
  * It is a best practice to use Apache CXF 2.1.10 or later
  */
 import com.rim.ws.enterprise.admin.*;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.WebServiceException;
 import javax.xml.namespace.QName;
@@ -42,16 +45,22 @@ import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
 * successful, the program displays a message indicating that the failure has occurred.
 *
 *
-* This program was tested against the BlackBerry Device Service version 6.0.0, and the BlackBerry Enterprise Server version 5.0.3 MR5.
+* This program was tested against the BlackBerry Device Service version 6.0.0, and the BlackBerry Enterprise Server
+* version 5.0.3 MR5.
 */ 
  
 public class SampleBwsClient
 {
+	// Values used in log messages.
+	final private static long NANOSECONDS_IN_A_MILLISECOND =  1000000L;
+	private static long startTime = System.nanoTime();
+	
+	// Web service stubs.
 	private static BWSService _bwsService;
 	private static BWS _bws;
 	private static BWSUtilService _bwsUtilService;
-	private static BWSUtil _bwsUtil;
-
+	private static BWSUtil _bwsUtil;																																																									
+	
 	// The request Metadata information. 
 	// This is the version of the WSDL used to generate the proxy, not the version of the server.
 	private final static String CLIENT_VERSION = "6.0.0";
@@ -68,9 +77,9 @@ public class SampleBwsClient
 	private final static String AUTHENTICATOR_NAME = "BlackBerry Administration Service";
 
 	// Hostname to use when connecting to web service.
-	private final static String BWS_HOST_NAME = "<BWSHostName>"; // e.g. BWS_HOST_NAME = "server01.yourcompany.net".	
-	private final static String USERNAME = "<username>"; // e.g. USERNAME = "admin".	
-	private final static String PASSWORD = "<password>"; // e.g. PASSWORD = "password".
+	private static String BWS_HOST_NAME = null; // e.g. BWS_HOST_NAME = "server01.yourcompany.net".	
+	private static String USERNAME = null; // e.g. USERNAME = "admin".	
+	private static String PASSWORD = null; // e.g. PASSWORD = "password".
 
 
 	/*
@@ -87,12 +96,12 @@ public class SampleBwsClient
 	 * 
 	 * String searches are not case-sensitive. Wildcards and prefix or suffix matching is supported.
 	 */
-
+	
 	// Email address used to create a new user with the createUsers() API call.
-	private final static String CREATE_NEW_USER_EMAIL = "\"user01@example.net\"";
+	private static String CREATE_NEW_USER_EMAIL = null;
 
 	// Email address used to identify the user to find with the getUsersDetail() API call.
-	private final static String DISPLAY_USER_DETAIL_EMAIL = "\"user01@example.net\"";
+	private static String DISPLAY_USER_DETAIL_EMAIL = null;
 
 	/*******************************************************************************************************************
 	 * 
@@ -105,7 +114,7 @@ public class SampleBwsClient
 	private static boolean setup()
 	{
 		final String METHOD_NAME = "setup()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		boolean returnValue = false;
 		REQUEST_METADATA.setClientVersion(CLIENT_VERSION);
 		REQUEST_METADATA.setLocale(LOCALE);
@@ -123,24 +132,27 @@ public class SampleBwsClient
 		catch (MalformedURLException e)
 		{
 
-			System.err.format("Cannot initialize wsdl urls%n");
-			System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+			logMessage("Cannot initialize web service URLs");
+			logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 			return returnValue;
 		}
-
+		
 		// Initialize the BWS web service stubs that will be used for all calls.
+		logMessage("Initializing BWS web service stub");
 		QName serviceBWS = new QName("http://ws.rim.com/enterprise/admin", "BWSService");
 		QName portBWS = new QName("http://ws.rim.com/enterprise/admin", "BWS");
 		_bwsService = new BWSService(null, serviceBWS);
 		_bwsService.addPort(portBWS, "http://schemas.xmlsoap.org/soap/", bwsServiceUrl.toString());
 		_bws = _bwsService.getPort(portBWS,BWS.class);
-
+		logMessage("BWS web service stub initialized");
+		
+		logMessage("Initializing BWSUtil web service stub");
 		QName serviceUtil = new QName("http://ws.rim.com/enterprise/admin", "BWSUtilService");
 		QName portUtil = new QName("http://ws.rim.com/enterprise/admin", "BWSUtil");
 		_bwsUtilService = new BWSUtilService(null, serviceUtil);
 		_bwsUtilService.addPort(portUtil, "http://schemas.xmlsoap.org/soap/", bwsUtilServiceUrl.toString());
 		_bwsUtil = _bwsUtilService.getPort(portUtil, BWSUtil.class);
-
+		logMessage("BWSUtil web service stub initialized");
 		// Set the connection timeout to 60 seconds.
 		HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
 		httpClientPolicy.setConnectionTimeout(60000);
@@ -175,15 +187,15 @@ public class SampleBwsClient
 			}
 			else
 			{
-				System.err.format("'encodedUsername' is null or empty%n");
+				logMessage("'encodedUsername' is null or empty");
 			}
 		}
 		else
 		{
-			System.err.format("'authenticator' is null%n");
+			logMessage("'authenticator' is null");
 		}
 
-		System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+		logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 		return returnValue;
 	}
 
@@ -201,16 +213,26 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "getAuthenticator()";
 		final String BWS_API_NAME = "_bwsUtil.getAuthenticators()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		Authenticator returnValue = null;
 
 		GetAuthenticatorsRequest request = new GetAuthenticatorsRequest();
 		request.setMetadata(REQUEST_METADATA);
 
-		System.err.format("Calling %s...%n", BWS_API_NAME);
-		GetAuthenticatorsResponse response = _bwsUtil.getAuthenticators(request);
-		System.err.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode());
-
+		GetAuthenticatorsResponse response=null;
+		try 
+        { 
+			logRequest(BWS_API_NAME);
+			response = _bwsUtil.getAuthenticators(request);
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
+        }
+        catch (WebServiceException e)
+        {
+        	// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+        }
+		
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			if (response.getAuthenticators() != null && !response.getAuthenticators().isEmpty())
@@ -226,21 +248,20 @@ public class SampleBwsClient
 
 				if (returnValue == null)
 				{
-					System.err.format("Could not find \"%s\" in GetAuthenticatorsResponse%n", authenticatorName);
+					logMessage("Could not find \"%s\" in GetAuthenticatorsResponse", authenticatorName);
 				}
 			}
 			else
 			{
-				System.err.format("No authenticators in GetAuthenticatorsResponse%n");
+				logMessage("No authenticators in GetAuthenticatorsResponse");
 			}
 		}
 		else
 		{
-			System.err.format(	"Error: Code: \"%s\", Message: \"%s\"%n", response.getReturnStatus().getCode(),
-								response.getReturnStatus().getMessage());
+			logMessage(	"Error Message: \"%s\"", response.getReturnStatus().getMessage());
 		}
 
-		System.err.format("Exiting %s with %s%n", METHOD_NAME, returnValue == null ? "\"null\""
+		logMessage("Exiting %s with %s", METHOD_NAME, returnValue == null ? "\"null\""
 				: "Authenticator object (Name \"" + returnValue.getName() + "\")");
 		return returnValue;
 	}
@@ -261,7 +282,7 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "getEncodedUserName()";
 		final String BWS_API_NAME = "_bwsUtil.getEncodedUsername()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		String returnValue = null;
 
 		GetEncodedUsernameRequest request = new GetEncodedUsernameRequest();
@@ -275,21 +296,30 @@ public class SampleBwsClient
 		credentialType.setValue("PASSWORD");
 		request.setCredentialType(credentialType);
 
-		System.err.format("Calling %s...%n", BWS_API_NAME);
-		GetEncodedUsernameResponse response = _bwsUtil.getEncodedUsername(request);
-		System.err.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode());
-
+		GetEncodedUsernameResponse response=null;
+		try
+		{
+			logRequest(BWS_API_NAME);
+			response = _bwsUtil.getEncodedUsername(request);
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
+		}
+	    catch (WebServiceException e)
+	    {
+	    	// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+	    }
+		
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			returnValue = response.getEncodedUsername();
 		}
 		else
 		{
-			System.err.format(	"Error: Code: \"%s\", Message: \"%s\"%n", response.getReturnStatus().getCode(),
-								response.getReturnStatus().getMessage());
+			logMessage(	"Error Message: \"%s\"", response.getReturnStatus().getMessage());
 		}
 
-		System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue == null ? "null" : returnValue);
+		logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue == null ? "null" : returnValue);
 		return returnValue;
 	}
 
@@ -306,7 +336,7 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "getUser()";
 		final String BWS_API_NAME = "_bws.getUsers()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		User returnValue = null;
 
 		GetUsersRequest request = new GetUsersRequest();
@@ -323,7 +353,7 @@ public class SampleBwsClient
 		 */
 		if (!DISPLAY_USER_DETAIL_EMAIL.startsWith("\"") || !DISPLAY_USER_DETAIL_EMAIL.endsWith("\""))
 		{
-			System.err.format(	"Warning: Email Address \"%s\" is not enclosed in double-quotes%n",
+			logMessage(	"Warning: Email Address \"%s\" is not enclosed in double-quotes",
 								DISPLAY_USER_DETAIL_EMAIL);
 		}
 		searchCriteria.setEmailAddress(DISPLAY_USER_DETAIL_EMAIL);
@@ -340,10 +370,20 @@ public class SampleBwsClient
 		sortBy.setValue("EMAIL_ADDRESS");
 		request.setSortBy(sortBy);
 
-		System.err.format("Calling %s...%n", BWS_API_NAME);
-		GetUsersResponse response = _bws.getUsers(request);
-		System.err.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode());
-
+		GetUsersResponse response=null;
+		try
+		{
+			logRequest(BWS_API_NAME);
+			response = _bws.getUsers(request);
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
+		}
+	    catch (WebServiceException e)
+	    {
+	    	// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+	    }
+		
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			if (response.getUsers() != null && response.getUsers().size() == 1)
@@ -353,21 +393,20 @@ public class SampleBwsClient
 			}
 			else if (response.getUsers() != null && response.getUsers().size() > 1)
 			{
-				System.err.format("More than one user was found with email address \"%s\"%n", 
+				logMessage("More than one user was found with email address \"%s\"", 
 				                  DISPLAY_USER_DETAIL_EMAIL);
 			}
 			else
 			{
-				System.err.format("No user was found with email address \"%s\"%n", DISPLAY_USER_DETAIL_EMAIL);
+				logMessage("No user was found with email address \"%s\"", DISPLAY_USER_DETAIL_EMAIL);
 			}
 		}
 		else
 		{
-			System.err.format(	"Error: Code: \"%s\", Message: \"%s\"%n", response.getReturnStatus().getCode(),
-								response.getReturnStatus().getMessage());
+			logMessage(	"Error Message: \"%s\"", response.getReturnStatus().getMessage());
 		}
 
-		System.err.format("Exiting %s with %s%n", METHOD_NAME, returnValue == null ? "\"null\"" : "User object (UID \""
+		logMessage("Exiting %s with %s", METHOD_NAME, returnValue == null ? "\"null\"" : "User object (UID \""
 				+ returnValue.getUid() + "\")");
 		return returnValue;
 	}
@@ -384,18 +423,18 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "displayUserDetails()";
 		final String BWS_API_NAME = "_bws.getUsersDetail()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		boolean returnValue = false;
 
-		System.err.format("Displaying details for user with email address \"%s\"%n", DISPLAY_USER_DETAIL_EMAIL);
+		logMessage("Displaying details for user with email address \"%s\"", DISPLAY_USER_DETAIL_EMAIL);
 
 		// Getting the user object.
 		User user = getUser();
 
 		if (user == null)
 		{
-			System.err.format("'user' is null%n");
-			System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+			logMessage("'user' is null");
+			logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 			return returnValue;
 		}
 
@@ -411,10 +450,19 @@ public class SampleBwsClient
 		request.setLoadITPolicies(true);
 		request.getUsers().add(user);
 
-		System.err.format("Calling %s...%n", BWS_API_NAME);
-		GetUsersDetailResponse response = _bws.getUsersDetail(request);
-		System.err.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode());
-
+		GetUsersDetailResponse response=null;
+		try{
+			logRequest(BWS_API_NAME);
+			response = _bws.getUsersDetail(request);
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
+		}
+	    catch (WebServiceException e)
+	    {
+	    	// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+	    }
+		
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			if (response.getIndividualResponses() != null && response.getIndividualResponses().size() == 1)
@@ -423,15 +471,14 @@ public class SampleBwsClient
 				{
 					UserDetail userDetail = individualResponse.getUserDetail();
 
-					System.out.format("User details:%n");
+					displayResult("User details:");
 					// The values of the fields, and whether they will be populated or not, depends on the device type.
-					System.out.format("Display Name: %s%n", userDetail.getDisplayName());
-					System.out.format("User UID: %s%n", individualResponse.getUserUid());
+					displayResult("Display Name: %s", userDetail.getDisplayName());
+					displayResult("User UID: %s", individualResponse.getUserUid());
 					// Displays time in UTC format.
-					System.out.format("Last Login Time: %s%n", userDetail.getLastLoginTime());
+					displayResult("Last Login Time: %s", userDetail.getLastLoginTime());
 					if (userDetail.getIndirectITPolicies() != null && !userDetail.getIndirectITPolicies().isEmpty())
 					{
-						System.out.format("Indirect IT policy names: ");
 						StringBuilder policyString = new StringBuilder();
 						for (IndirectITPolicy indirectITPolicy : userDetail.getIndirectITPolicies())
 						{
@@ -441,63 +488,63 @@ public class SampleBwsClient
 							}
 							policyString.append(indirectITPolicy.getItPolicy().getPolicy().getName());
 						}
-						System.out.format("%s%n", policyString);
+						displayResult("Indirect IT policy names: %s", policyString);
 					}
 
 					if (userDetail.getDirectITPolicy() != null && userDetail.getDirectITPolicy().getPolicy() != null)
 					{
-						System.out.format("Direct IT policy name: %s%n", userDetail.getDirectITPolicy().getPolicy().getName());
+						displayResult("Direct IT policy name: %s", userDetail.getDirectITPolicy().getPolicy().getName());
 					}
 
 					/*
-					 * The BWS object model supports multiple accounts and devices. However, BES 5.0.3 will only return
-					 * at most one object in the userDetail.getDevices() list, and at most one object in the
+					 * The BWS object model supports multiple accounts and devices. However, BlackBerry Enterprise Server 5.0.3 or
+					 * later will only return at most one object in the userDetail.getDevices() list, and at most one object in the
 					 * userDetail.getAccounts() list.
 					 */
 					if (userDetail.getDevices() != null && !userDetail.getDevices().isEmpty())
 					{
-						System.out.format("User's device details:%n");
+						displayResult("User's device details:");
 
 						int deviceIndex = 1;
 						for (Device device : userDetail.getDevices())
 						{
-							System.out.format("Device %d data%n", (deviceIndex++));
-							System.out.format("---------------%n");
-							System.out.format("PIN: %s%n", device.getPin());
-							System.out.format("Model: %s%n", device.getModel());
-							System.out.format("Phone Number: %s%n", device.getPhoneNumber());
-							
+							displayResult("Device %d data", (deviceIndex++));
+							displayResult("---------------");
+							displayResult("PIN: %s", device.getPin());
+							displayResult("Model: %s", device.getModel());
+							displayResult("Phone Number: %s", device.getPhoneNumber());
+
 							/*The following 3 lines are valid for BlackBerry Enterprise Server 5.0.3 MR5 or later*/
-							System.out.format("Active Carrier: %s%n", device.getActiveCarrier());
-							System.out.format("Network: %s%n", device.getNetwork());
-							System.out.format("Serial Number: %s%n", device.getSerialNumber());
-							
-							System.out.format("State: %s%n", device.getState().getValue());
-							System.out.format("IT Policy Name: %s%n", device.getItPolicyName());
-							
+							displayResult("Active Carrier: %s", device.getActiveCarrier());
+							displayResult("Network: %s", device.getNetwork());
+							displayResult("Serial Number: %s", device.getSerialNumber());
+
+							displayResult("State: %s", device.getState().getValue());
+							displayResult("IT Policy Name: %s", device.getItPolicyName());
+
 							/*The following 6 lines are valid for BlackBerry Enterprise Server 5.0.3 MR5 or later*/
-							System.out.format("Platform Version: %s%n", device.getPlatformVersion());
-							System.out.format("Total Messages Expired: %s%n", device.getTotalMessagesExpired());
-							System.out.format("Total Messages Filtered: %s%n", device.getTotalMessagesFiltered());
-							System.out.format("Total Messages Forwarded: %s%n", device.getTotalMessagesForwarded());
-							System.out.format("Total Messages Pending: %s%n", device.getTotalMessagesPending());
-							System.out.format("Total Messages Sent: %s%n", device.getTotalMessagesSent());
-							
-							System.out.format("---------------%n");
+							displayResult("Platform Version: %s", device.getPlatformVersion());
+							displayResult("Total Messages Expired: %s", device.getTotalMessagesExpired());
+							displayResult("Total Messages Filtered: %s", device.getTotalMessagesFiltered());
+							displayResult("Total Messages Forwarded: %s", device.getTotalMessagesForwarded());
+							displayResult("Total Messages Pending: %s", device.getTotalMessagesPending());
+							displayResult("Total Messages Sent: %s", device.getTotalMessagesSent());
+
+							displayResult("---------------");
 						}
 					}
 
 					if (userDetail.getAccounts() != null && !userDetail.getAccounts().isEmpty())
 					{
-						System.out.format("User's account details:%n");
+						displayResult("User's account details:");
 
 						int accountIndex = 1;
 						for (Account account : userDetail.getAccounts())
 						{
-							System.out.format("Account %d data%n", (accountIndex++));
-							System.out.format("---------------%n");
-							System.out.format("Email Address: %s%n", account.getEmailAddress());
-							System.out.format("---------------%n");
+							displayResult("Account %d data", (accountIndex++));
+							displayResult("---------------");
+							displayResult("Email Address: %s", account.getEmailAddress());
+							displayResult("---------------");
 						}
 					}
 				}
@@ -506,30 +553,29 @@ public class SampleBwsClient
 			}
 			else if (response.getIndividualResponses() != null && response.getIndividualResponses().size() > 1)
 			{
-				System.err.format("More than one user was found with userUid \"%s\"%n", user.getUid());
+				logMessage("More than one user was found with userUid \"%s\"", user.getUid());
 			}
 			else
 			{
-				System.err.format("No user was found with userUid \"%s\"%n", user.getUid());
+				logMessage("No user was found with userUid \"%s\"", user.getUid());
 			}
 		}
 		else
 		{
-			System.err.format(	"Error: Code: \"%s\", Message: \"%s\"%n", response.getReturnStatus().getCode(),
-								response.getReturnStatus().getMessage());
+			logMessage(	"Error Message: \"%s\"", response.getReturnStatus().getMessage());
 			if (response.getIndividualResponses() != null)
 			{
 				for (GetUsersDetailIndividualResponse individualResponse : response.getIndividualResponses())
 				{
-					System.err.format("User UID: \"%s\"%n", individualResponse.getUserUid());
-					System.err.format(	"Individual Response - Code: \"%s\", Message: \"%s\"%n",
+					logMessage("User UID: \"%s\"", individualResponse.getUserUid());
+					logMessage(	"Individual Response - Code: \"%s\", Message: \"%s\"",
 										individualResponse.getReturnStatus().getCode(),
 										individualResponse.getReturnStatus().getMessage());
 				}
 			}
 		}
 
-		System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+		logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 		return returnValue;
 	}
 
@@ -545,7 +591,7 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "createUser()";
 		final String BWS_API_NAME = "_bws.createUsers()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		boolean returnValue = false;
 
 		// Create the request object.
@@ -563,11 +609,11 @@ public class SampleBwsClient
 		 */
 		if (!CREATE_NEW_USER_EMAIL.startsWith("\"") || !CREATE_NEW_USER_EMAIL.endsWith("\""))
 		{
-			System.err.format("Warning: Email Address \"%s\" is not enclosed in double-quotes%n", 
+			logMessage("Warning: Email Address \"%s\" is not enclosed in double-quotes", 
 			                  CREATE_NEW_USER_EMAIL);
 		}
 		// Value of the variable "CREATE_NEW_USER_EMAIL" is used to create a BlackBerry-enabled user.
-		System.err.format("Creating a user with email address \"%s\"%n", CREATE_NEW_USER_EMAIL);
+		logMessage("Creating a user with email address \"%s\"", CREATE_NEW_USER_EMAIL);
 		accountAttributes.setEmailAddress(CREATE_NEW_USER_EMAIL);
 
 		newUser.setAccountAttributes(accountAttributes);
@@ -575,19 +621,28 @@ public class SampleBwsClient
 		newUser.setServer(null);
 
 		createUsersRequest.getNewUsers().add(newUser);
-
-		System.err.format("Calling %s...%n", BWS_API_NAME);
-		CreateUsersResponse response = _bws.createUsers(createUsersRequest);
-		System.err.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode());
-
+		CreateUsersResponse response=null;
+		try
+		{
+			logRequest(BWS_API_NAME);
+			response = _bws.createUsers(createUsersRequest);
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
+		}
+	    catch (WebServiceException e)
+	    {
+	    	// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+	    }
+		
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			if (response.getIndividualResponses() != null)
 			{
 				for (IndividualResponse individualResponse : response.getIndividualResponses())
 				{
-					System.out.format(	"User created with UID \"%s\" using Email Address \"%s\"%n",
-										individualResponse.getUid(), CREATE_NEW_USER_EMAIL);
+					displayResult(	"User created with UID \"%s\" using Email Address \"%s\"",
+										individualResponse.getUid(), accountAttributes.getEmailAddress());
 				}
 
 				returnValue = true;
@@ -595,20 +650,19 @@ public class SampleBwsClient
 		}
 		else
 		{
-			System.err.format(	"Error: Code: \"%s\", Message: \"%s\"%n", response.getReturnStatus().getCode(),
-								response.getReturnStatus().getMessage());
+			logMessage(	"Error Message: \"%s\"",  response.getReturnStatus().getMessage());
 			if (response.getIndividualResponses() != null)
 			{
 				for (IndividualResponse individualResponse : response.getIndividualResponses())
 				{
-					System.err.format(	"Individual Response - Code: \"%s\", Message: \"%s\"%n",
+					logMessage(	"Individual Response - Code: \"%s\", Message: \"%s\"",
 										individualResponse.getReturnStatus().getCode(),
 										individualResponse.getReturnStatus().getMessage());
 				}
 			}
 		}
 
-		System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+		logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 		return returnValue;
 	}
 
@@ -624,7 +678,7 @@ public class SampleBwsClient
 	{
 		final String METHOD_NAME = "getSystemInfo()";
 		final String BWS_API_NAME = "_bws.getSystemInfo()";
-		System.err.format("Entering %s%n", METHOD_NAME);
+		logMessage("Entering %s", METHOD_NAME);
 		boolean returnValue = false;
 
 		GetSystemInfoRequest request = new GetSystemInfoRequest();
@@ -648,9 +702,9 @@ public class SampleBwsClient
 		 */
 		try
 		{
-			System.err.format(String.format("Calling %s...%n", BWS_API_NAME));
+			logRequest(BWS_API_NAME);
 			response = _bws.getSystemInfo(request);
-			System.err.format(String.format("...%s returned \"%s\"%n", BWS_API_NAME, response.getReturnStatus().getCode()));
+			logResponse(BWS_API_NAME, response.getReturnStatus().getCode(), response.getMetadata());
 		}
 		catch (WebServiceException e)
 		{
@@ -660,44 +714,33 @@ public class SampleBwsClient
 				// Handle authentication failure.
 				if (httpException != null && httpException.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED)
 				{
-					System.err.format("Failed to authenticate with the BWS web service%n");
-					System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+					logMessage("Failed to authenticate with the BWS web service");
+					logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 					return returnValue;
 				}
 			}
-			else
-			{
-				// Re-throw other exceptions.
-				throw e;
-			}
-		}
-
-		if (response.getMetadata() != null)
-		{			
-			/* 
-             * Converting response.getMetadata().getExecutionTime() (which is in nano-seconds) into seconds by 
-             * multiplying it by 10^-9.
-             */
-			System.err.format(	"%s Execution Time: %.4f seconds%n", BWS_API_NAME,
-								(response.getMetadata().getExecutionTime() * Math.pow(10, -9)));
-			System.err.format("%s Request UID: %s%n", BWS_API_NAME, response.getMetadata().getRequestUid());
+			
+			// Log and re-throw exception.
+        	logMessage("Exiting %s with exception \"%s\"", METHOD_NAME, e.getMessage());
+            throw e;
+			
 		}
 
 		if (response.getReturnStatus().getCode().equals("SUCCESS"))
 		{
 			if (response.getProperties() != null && !response.getProperties().isEmpty())
 			{
-				System.err.format("%s returned the following properties:%n", BWS_API_NAME);
+				logMessage("%s returned the following properties:", BWS_API_NAME);
 				for (Property property : response.getProperties())
 				{
-					System.out.format("%s: %s%n", property.getName(), property.getValue());
+					displayResult("%s: %s", property.getName(), property.getValue());
 				}
 
 				returnValue = true;
 			}
 			else
 			{
-				System.err.format("No properties in response%n");
+				logMessage("No properties in response");
 			}
 		}
 		else
@@ -706,10 +749,96 @@ public class SampleBwsClient
 								response.getReturnStatus().getMessage());
 		}
 
-		System.err.format("Exiting %s with value \"%s\"%n", METHOD_NAME, returnValue);
+		logMessage("Exiting %s with value \"%s\"", METHOD_NAME, returnValue);
 		return returnValue;
 	}
 
+	/*******************************************************************************************************************
+	 * 
+	 * Creates a string containing the elapsed time since the program started.
+	 * The execution time will be reset to 00:00.000 if the execution time exceeds an hour.
+	 * 
+	 * @return Returns the elapsed time from start of program.
+	 * 
+	 ******************************************************************************************************************* 
+	 */
+	public static String logTime()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("mm:ss.SSS");
+		long timeDifference = System.nanoTime()-startTime;
+		long dateTime = (timeDifference/NANOSECONDS_IN_A_MILLISECOND);
+		String time=dateFormat.format(dateTime);
+		return time;
+	}
+	
+	/*******************************************************************************************************************
+	 * 
+	 * Prints a log message to stderr.
+	 * Appends the message to a string containing the elapsed time of the program.
+	 * 
+	 * @param format - A string which formats how args will be displayed in the message.
+	 * @param args - List of objects to be displayed in the message.
+	 * 
+	 ******************************************************************************************************************* 
+	 */
+	public static void logMessage(String format, Object... args){
+		//Change output stream if desired
+		PrintStream  logStream=System.err;
+		logStream.format(logTime()+" "+format+"%n", args);
+	}
+	
+	/*******************************************************************************************************************
+	 * 
+	 * Prints results to stderr.
+	 * 
+	 * @param format - A string which formats how args will be displayed in the message.
+	 * @param args - List of objects to be displayed in the message.
+	 * 
+	 ******************************************************************************************************************* 
+	 */
+	public static void displayResult(String format, Object... args){
+		//Change output stream if desired
+		PrintStream  resultStream=System.err;
+		resultStream.format(format+"%n", args);	
+	}
+	
+	/*******************************************************************************************************************
+	 * 
+	 * Logs the calling of an API.
+	 * 
+	 * @param BWS_API_NAME - A string of the API called.
+	 * 
+	 ******************************************************************************************************************* 
+	 */
+	public static void logRequest(String BWS_API_NAME){
+		logMessage("Calling %s...", BWS_API_NAME);
+	}
+	
+	/*******************************************************************************************************************
+	 * 
+	 * Logs various information about an API response.
+	 * 
+	 * @param BWS_API_NAME - A string of the API called.
+	 * @param code - The return code from the API called.
+	 * @param metadata - The metadata contained in the response object returned from the API called.
+	 * 
+	 ******************************************************************************************************************* 
+	 */
+	public static void logResponse(String BWS_API_NAME, String code, ResponseMetadata metadata){
+		logMessage("...%s returned \"%s\"", BWS_API_NAME, code);
+		if (metadata != null)
+		{			
+			/* 
+             * Converting metadata.getExecutionTime() (which is in nano-seconds) into seconds by 
+             * multiplying it by 10^-9.
+             */
+			logMessage("Execution Time: %.4f seconds", (metadata.getExecutionTime() * Math.pow(10, -9)));
+			logMessage("Request UID: %s", metadata.getRequestUid());
+		}
+	}
+	
+	
+	
 	/*******************************************************************************************************************
 	 * 
 	 * The main method.
@@ -723,6 +852,7 @@ public class SampleBwsClient
 	 */
 	public static void main(String[] args) throws IOException
 	{
+		
 		// Return codes
 		final int SUCCESS = 0;
 		final int FAILURE = 1;
@@ -730,14 +860,22 @@ public class SampleBwsClient
 
 		/* 
 		 * Flags that are used to determine whether or not
-		 * createUser() and displayUserDetails() gets called.
+		 * createUser() and displayUserDetails() get called.
 		 */
 		boolean createNewUser = false;
 		boolean displayUserDetails = true;
+		
+		// Hostname to use when connecting to web service.
+		BWS_HOST_NAME = "<BWSHostName>"; // e.g. BWS_HOST_NAME = "server01.yourcompany.net".
+		USERNAME = "<username>"; // e.g. USERNAME = "admin".
+		PASSWORD = "<password>"; // e.g. PASSWORD = "password".
+		
+		// Email address used to create a new user with the createUsers() API call.
+		CREATE_NEW_USER_EMAIL = "\"user01@example.net\"";
 
-		// Write standard output / error streams to text files.
-		System.setErr(System.out);
-
+		// Email address used to identify the user to find with the getUsersDetail() API call.
+		DISPLAY_USER_DETAIL_EMAIL = "\"user01@example.net\"";
+		
 		/* 
          * BWS Host certificate must be installed on the client machine before running this sample code, otherwise
          * a SSL/TLS secure channel error will be thrown. For more information, see the BlackBerry Web Services for
@@ -745,23 +883,23 @@ public class SampleBwsClient
          */
 		try
 		{
-			System.err.format("Initializing web services...%n");
+			logMessage("Initializing web services...");
 			if (setup())
 			{
 				/* 
 				 * Demonstrate call to _bws.getSystemInfo() API.
 				 * This is also the first authenticated call in the client application.
 				 */
-				System.err.format("Getting system information...%n");
+				logMessage("Getting system information...");
 				if (getSystemInfo())
 				{
 					if (createNewUser)
 					{
 						// Demonstrate call to _bws.createUsers() API.
-						System.err.format("Creating a user...%n");
+						logMessage("Creating a user...");
 						if (!createUser())
 						{
-							System.err.format("Error: createUser() failed%n");
+							logMessage("Error: createUser() failed");
 							returnCode = FAILURE;
 						}
 					}
@@ -769,33 +907,33 @@ public class SampleBwsClient
 					if (displayUserDetails)
 					{
 						// Demonstrate call to _bws.getUsers() and _bws.getUsersDetail() APIs.
-						System.err.format("Displaying a user's details...%n");
+						logMessage("Displaying a user's details...");
 						if (!displayUserDetails())
 						{
-							System.err.format("Error: displayUserDetails() failed%n");
+							logMessage("Error: displayUserDetails() failed");
 							returnCode = FAILURE;
 						}
 					}
 				}
 				else
 				{
-					System.err.format("Error: getSystemInfo() failed%n");
+					logMessage("Error: getSystemInfo() failed");
 					returnCode = FAILURE;
 				}
 			}
 			else
 			{
-				System.err.format("Error: setup() failed%n");
+				logMessage("Error: setup() failed");
 				returnCode = FAILURE;
 			}
 		}
 		catch (Exception e)
 		{
-			System.err.format(String.format("Exception: \"%s\"%n", e.getMessage()));
+			System.err.format("Exception: \"%s\"\n", e.getMessage());
 			returnCode = FAILURE;
 		}
 
-		System.err.format("Press Enter to exit%n");
+		System.err.format("Press Enter to exit\n");
 		System.in.read();
 
 		System.exit(returnCode);

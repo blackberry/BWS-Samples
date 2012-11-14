@@ -1,24 +1,24 @@
-﻿ /* 
- * Copyright (c) 2012 Research In Motion Limited. 
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
- */
+﻿/* 
+* Copyright (c) 2012 Research In Motion Limited. 
+* 
+* Licensed under the Apache License, Version 2.0 (the "License"); 
+* you may not use this file except in compliance with the License. 
+* You may obtain a copy of the License at 
+* 
+* http://www.apache.org/licenses/LICENSE-2.0 
+* 
+* Unless required by applicable law or agreed to in writing, software 
+* distributed under the License is distributed on an "AS IS" BASIS, 
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+* See the License for the specific language governing permissions and 
+* limitations under the License. 
+*/
 using System;
 using System.Net;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
-
+using System.Diagnostics;
 /*
  * SampleBwsClient.cs
  * 
@@ -36,9 +36,12 @@ namespace Rim.Bws.Samples
 {
     class SampleBwsClient
     {
+        // Web service stubs.
         private static BWSService bwsService;
         private static BWSUtilService bwsUtilService;
 
+        // Timer used by logging.
+        private static Stopwatch startTime = new Stopwatch();
         // The request Metadata information.
         // This is the version of the WSDL used to generate the proxy, not the version of the server.	
         private const string ClientVersion = "6.0.0";
@@ -55,9 +58,9 @@ namespace Rim.Bws.Samples
         private const string AuthenticatorName = "BlackBerry Administration Service";
 
         // Hostname to use when connecting to web service.        
-        private const string BWSHostName = "<BWSHostName>"; // e.g. BWSHostName = "server01.yourcompany.net".        
-        private const string Username = "<username>"; // e.g. Username = "admin".        
-        private const string Password = "<password>"; // e.g. Password = "password".
+        private static string BWSHostName = null; // e.g. BWSHostName = "server01.yourcompany.net".        
+        private static string Username = null; // e.g. Username = "admin".        
+        private static string Password = null; // e.g. Password = "password".
 
         /*
          * Note about exact String Searching: To use an email address as the search criteria for an exact string match 
@@ -75,10 +78,10 @@ namespace Rim.Bws.Samples
          */
 
         // Email address used to create a new user with the createUsers() API call.
-        private const string CreateNewUserEmail = "\"user01@example.net\"";
+        private static string CreateNewUserEmail = null;
 
         // Email address used to identify the user to find with the getUsersDetail() API call.
-        private const string DisplayUserDetailsEmail = "\"user01@example.net\"";
+        private static string DisplayUserDetailsEmail = null;
 
         /// <summary>
         /// Initialize the BWS and BWSUtil services.
@@ -87,16 +90,20 @@ namespace Rim.Bws.Samples
         private static bool Setup()
         {
             const string methodName = "Setup()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             bool returnValue = false;
 
             Metadata.clientVersion = ClientVersion;
             Metadata.locale = Locale;
             Metadata.organizationUid = OrgUid;
 
+            logMessage("Initializing BWS web service stub");
             bwsService = new BWSService();
+            logMessage("BWS web service stub initialized");
+            logMessage("Initializing BWSUtil web service stub");
             bwsUtilService = new BWSUtilService();
-            // URLs for the web services. This URL points to the main web service page.
+            logMessage("BWSUtil web service stub initialized");
+            // These are the URLs that point to the web services used for all calls.
             bwsService.Url = "https://" + BWSHostName + "/enterprise/admin/ws";
             bwsUtilService.Url = "https://" + BWSHostName + "/enterprise/admin/util/ws";
 
@@ -126,15 +133,15 @@ namespace Rim.Bws.Samples
                 }
                 else
                 {
-                    Console.Error.WriteLine("'encodedUsername' is null or empty");
+                    logMessage("'encodedUsername' is null or empty");
                 }
             }
             else
             {
-                Console.Error.WriteLine("'authenticator' is null");
+                logMessage("'authenticator' is null");
             }
 
-            Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+            logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
             return returnValue;
         }
 
@@ -147,15 +154,26 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "GetAuthenticator()";
             const string bwsApiName = "bwsUtilService.getAuthenticators()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             Authenticator returnValue = null;
 
             GetAuthenticatorsRequest request = new GetAuthenticatorsRequest();
             request.metadata = Metadata;
 
-            Console.Error.WriteLine("Calling {0}...", bwsApiName);
-            GetAuthenticatorsResponse response = bwsUtilService.getAuthenticators(request);
-            Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+            GetAuthenticatorsResponse response = null;
+
+            try
+            {
+                logRequest(bwsApiName);
+                response = bwsUtilService.getAuthenticators(request);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
+            }
+            catch (WebException e)
+            {
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+            }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
@@ -172,22 +190,21 @@ namespace Rim.Bws.Samples
 
                     if (returnValue == null)
                     {
-                        Console.Error.WriteLine("Could not find \"{0}\" in GetAuthenticatorsResponse",
+                        logMessage("Could not find \"{0}\" in GetAuthenticatorsResponse",
                             authenticatorName);
                     }
                 }
                 else
                 {
-                    Console.Error.WriteLine("No authenticators in GetAuthenticatorsResponse");
+                    logMessage("No authenticators in GetAuthenticatorsResponse");
                 }
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
             }
 
-            Console.Error.WriteLine("Exiting {0} with {1}", methodName, returnValue == null ? "\"null\"" :
+            logMessage("Exiting {0} with {1}", methodName, returnValue == null ? "\"null\"" :
                 "Authenticator object (Name \"" + returnValue.name + "\")");
             return returnValue;
         }
@@ -203,7 +220,7 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "GetEncodedUserName()";
             const string bwsApiName = "bwsUtilService.getEncodedUsername()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             string returnValue = null;
 
             GetEncodedUsernameRequest request = new GetEncodedUsernameRequest();
@@ -217,9 +234,20 @@ namespace Rim.Bws.Samples
             credentialType.value = "PASSWORD";
             request.credentialType = credentialType;
 
-            Console.Error.WriteLine("Calling {0}...", bwsApiName);
-            GetEncodedUsernameResponse response = bwsUtilService.getEncodedUsername(request);
-            Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+            GetEncodedUsernameResponse response = null;
+
+            try
+            {
+                logRequest(bwsApiName);
+                response = bwsUtilService.getEncodedUsername(request);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
+            }
+            catch (WebException e)
+            {
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+            }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
@@ -227,11 +255,10 @@ namespace Rim.Bws.Samples
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
             }
 
-            Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue == null ? "null" :
+            logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue == null ? "null" :
                 returnValue);
             return returnValue;
         }
@@ -245,7 +272,7 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "GetUser()";
             const string bwsApiName = "bwsService.getUsers()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             User returnValue = null;
 
             GetUsersRequest request = new GetUsersRequest();
@@ -263,7 +290,7 @@ namespace Rim.Bws.Samples
              */
             if (!DisplayUserDetailsEmail.StartsWith("\"") || !DisplayUserDetailsEmail.EndsWith("\""))
             {
-                Console.Error.WriteLine("Warning: Email Address \"{0}\" is not enclosed in double-quotes",
+                logMessage("Warning: Email Address \"{0}\" is not enclosed in double-quotes",
                     DisplayUserDetailsEmail);
             }
             searchCriteria.emailAddress = DisplayUserDetailsEmail;
@@ -280,34 +307,44 @@ namespace Rim.Bws.Samples
             sortBy.value = "EMAIL_ADDRESS";
             request.sortBy = sortBy;
 
-            Console.Error.WriteLine("Calling {0}...", bwsApiName);
-            GetUsersResponse response = bwsService.getUsers(request);
-            Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+            GetUsersResponse response = null;
+
+            try
+            {
+                logRequest(bwsApiName);
+                response = bwsService.getUsers(request);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
+            }
+            catch (WebException e)
+            {
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+            }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
                 if (response.users != null && response.users.Length == 1)
                 {
                     // Returns the first user object in the users array.
-                    returnValue = response.users [0];
+                    returnValue = response.users[0];
                 }
                 else if (response.users != null && response.users.Length > 1)
                 {
-                    Console.Error.WriteLine("More than one user was found with email address \"{0}\"",
+                    logMessage("More than one user was found with email address \"{0}\"",
                         DisplayUserDetailsEmail);
                 }
                 else
                 {
-                    Console.Error.WriteLine("No user was found with email address \"{0}\"", DisplayUserDetailsEmail);
+                    logMessage("No user was found with email address \"{0}\"", DisplayUserDetailsEmail);
                 }
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
             }
 
-            Console.Error.WriteLine("Exiting {0} with {1}", methodName, returnValue == null ? "\"null\"" :
+            logMessage("Exiting {0} with {1}", methodName, returnValue == null ? "\"null\"" :
                 "User object (UID \"" + returnValue.uid + "\")");
             return returnValue;
         }
@@ -320,18 +357,19 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "DisplayUserDetails()";
             const string bwsApiName = "bwsService.getUsersDetail()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             bool returnValue = false;
-
+            
+            logMessage("Displaying details for user with email address \"{0}\"",
+                DisplayUserDetailsEmail);
+            
             // Getting the user object.
             User user = GetUser();
-            Console.Error.WriteLine("Displaying details for user with email address \"{0}\"",
-                DisplayUserDetailsEmail);
-
+            
             if (user == null)
             {
-                Console.Error.WriteLine("'user' is null");
-                Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+                logMessage("'user' is null");
+                logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
                 return returnValue;
             }
 
@@ -350,9 +388,19 @@ namespace Rim.Bws.Samples
             request.loadITPolicies = true;
             request.users = users.ToArray();
 
-            Console.Error.WriteLine("Calling {0}...", bwsApiName);
-            GetUsersDetailResponse response = bwsService.getUsersDetail(request);
-            Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+            GetUsersDetailResponse response = null;
+            try
+            {
+                logRequest(bwsApiName);
+                response = bwsService.getUsersDetail(request);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
+            }
+            catch (WebException e)
+            {
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+            }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
@@ -362,16 +410,15 @@ namespace Rim.Bws.Samples
                     {
                         UserDetail userDetail = individualResponse.userDetail;
 
-                        Console.WriteLine("User details:");
+                        displayResult("User details:");
 
-                        Console.WriteLine("Display Name: {0}", userDetail.displayName);
-                        Console.WriteLine("User UID: {0}", individualResponse.userUid);
+                        displayResult("Display Name: {0}", userDetail.displayName);
+                        displayResult("User UID: {0}", individualResponse.userUid);
 
                         // Displays time in UTC format.
-                        Console.WriteLine("Last Login Time: {0}", userDetail.lastLoginTime);
+                        displayResult("Last Login Time: {0}", userDetail.lastLoginTime);
                         if (userDetail.indirectITPolicies != null && userDetail.indirectITPolicies.Length > 0)
                         {
-                            Console.Write("Indirect IT policy names: ");
                             StringBuilder policyString = new StringBuilder();
                             foreach (IndirectITPolicy indirectITPolicy in userDetail.indirectITPolicies)
                             {
@@ -381,57 +428,57 @@ namespace Rim.Bws.Samples
                                 }
                                 policyString.Append(indirectITPolicy.itPolicy.policy.name);
                             }
-                            Console.WriteLine(policyString);
+                            displayResult("Indirect IT policy names: {0}", policyString.ToString());
                         }
 
                         if (userDetail.directITPolicy != null && userDetail.directITPolicy.policy != null)
                         {
-                            Console.WriteLine("Direct IT policy name: {0}", userDetail.directITPolicy.policy.name);
+                            displayResult("Direct IT policy name: {0}", userDetail.directITPolicy.policy.name);
                         }
 
                         /*
-                         * The BWS object model supports multiple accounts and devices. However, BES 5.0.3 will only   
-                         * return at most one object in the userDetail.devices array, and at most one object in the 
-                         * userDetail.accounts array.
+                         * The BWS object model supports multiple accounts and devices. However, BlackBerry Enterprise
+                         * Server 5.0.3 or later will only return at most one object in the userDetail.devices array, and
+                         * at most one object in the userDetail.accounts array.
                          */
                         if (userDetail.devices != null && userDetail.devices.Length > 0)
                         {
-                            Console.WriteLine("User's device details:");
+                            displayResult("User's device details:");
 
                             int deviceIndex = 1;
                             foreach (Device device in userDetail.devices)
                             {
-                                Console.WriteLine("Device {0} data", (deviceIndex++));
-                                Console.WriteLine("---------------");
-                                Console.WriteLine("PIN: {0}", device.pin);
-                                Console.WriteLine("Model: {0}", device.model);
-                                Console.WriteLine("Phone Number: {0}", device.phoneNumber);
-                                Console.WriteLine("Active Carrier: {0}", device.activeCarrier);
-                                Console.WriteLine("Network: {0}", device.network);
-                                Console.WriteLine("Serial Number: {0}", device.serialNumber);
-                                Console.WriteLine("State: {0}", device.state.value);
-                                Console.WriteLine("IT Policy Name: {0}", device.itPolicyName);
-                                Console.WriteLine("Platform Version: {0}", device.platformVersion);
-                                Console.WriteLine("Total Messages Expired: {0}", device.totalMessagesExpired);
-                                Console.WriteLine("Total Messages Filtered: {0}", device.totalMessagesFiltered);
-                                Console.WriteLine("Total Messages Forwarded: {0}", device.totalMessagesForwarded);
-                                Console.WriteLine("Total Messages Pending: {0}", device.totalMessagesPending);
-                                Console.WriteLine("Total Messages Sent: {0}", device.totalMessagesSent);
-                                Console.WriteLine("---------------");
+                                displayResult("Device {0} data", (deviceIndex++));
+                                displayResult("---------------");
+                                displayResult("PIN: {0}", device.pin);
+                                displayResult("Model: {0}", device.model);
+                                displayResult("Phone Number: {0}", device.phoneNumber);
+                                displayResult("Active Carrier: {0}", device.activeCarrier);
+                                displayResult("Network: {0}", device.network);
+                                displayResult("Serial Number: {0}", device.serialNumber);
+                                displayResult("State: {0}", device.state.value);
+                                displayResult("IT Policy Name: {0}", device.itPolicyName);
+                                displayResult("Platform Version: {0}", device.platformVersion);
+                                displayResult("Total Messages Expired: {0}", device.totalMessagesExpired);
+                                displayResult("Total Messages Filtered: {0}", device.totalMessagesFiltered);
+                                displayResult("Total Messages Forwarded: {0}", device.totalMessagesForwarded);
+                                displayResult("Total Messages Pending: {0}", device.totalMessagesPending);
+                                displayResult("Total Messages Sent: {0}", device.totalMessagesSent);
+                                displayResult("---------------");
                             }
                         }
 
                         if (userDetail.accounts != null && userDetail.accounts.Length > 0)
                         {
-                            Console.WriteLine("User's account details:");
+                            displayResult("User's account details:");
 
                             int accountIndex = 1;
                             foreach (Account account in userDetail.accounts)
                             {
-                                Console.WriteLine("Account {0} data", (accountIndex++));
-                                Console.WriteLine("---------------");
-                                Console.WriteLine("Email Address: {0}", account.emailAddress);
-                                Console.WriteLine("---------------");
+                                displayResult("Account {0} data", (accountIndex++));
+                                displayResult("---------------");
+                                displayResult("Email Address: {0}", account.emailAddress);
+                                displayResult("---------------");
                             }
                         }
                     }
@@ -440,30 +487,29 @@ namespace Rim.Bws.Samples
                 }
                 else if (response.individualResponses != null && response.individualResponses.Length > 1)
                 {
-                    Console.Error.WriteLine("More than one user was found with userUid \"{0}\"",
+                    logMessage("More than one user was found with userUid \"{0}\"",
                         user.uid);
                 }
                 else
                 {
-                    Console.Error.WriteLine("No user was found with userUid \"{0}\"", user.uid);
+                    logMessage("No user was found with userUid \"{0}\"", user.uid);
                 }
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
                 if (response.individualResponses != null)
                 {
                     foreach (GetUsersDetailIndividualResponse individualResponse in response.individualResponses)
                     {
-                        Console.Error.WriteLine("User UID: \"{0}\"", individualResponse.userUid);
-                        Console.Error.WriteLine("Individual Response - Code: \"{0}\", Message: \"{1}\"",
+                        logMessage("User UID: \"{0}\"", individualResponse.userUid);
+                        logMessage("Individual Response - Code: \"{0}\", Message: \"{1}\"",
                             individualResponse.returnStatus.code, individualResponse.returnStatus.message);
                     }
                 }
             }
 
-            Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+            logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
             return returnValue;
         }
 
@@ -475,7 +521,7 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "CreateUser()";
             const string bwsApiName = "bwsService.createUsers()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             bool returnValue = false;
 
             // Create the request object.
@@ -483,7 +529,7 @@ namespace Rim.Bws.Samples
             createUsersRequest.metadata = Metadata;
 
             NewUser newUser = new NewUser();
-            
+
             // To create an administrator user, create and set the "UserAttributes".
             AccountAttributes accountAttributes = new AccountAttributes();
 
@@ -493,11 +539,11 @@ namespace Rim.Bws.Samples
              */
             if (!CreateNewUserEmail.StartsWith("\"") || !CreateNewUserEmail.EndsWith("\""))
             {
-                Console.Error.WriteLine("Warning: Email Address \"{0}\" is not enclosed in double-quotes",
+                logMessage("Warning: Email Address \"{0}\" is not enclosed in double-quotes",
                     CreateNewUserEmail);
             }
             // Value of the variable "CreateNewUserEmail" is used to create a BlackBerry-enabled user.
-            Console.Error.WriteLine("Creating a user with email address \"{0}\"", CreateNewUserEmail);
+            logMessage("Creating a user with email address \"{0}\"", CreateNewUserEmail);
             accountAttributes.emailAddress = CreateNewUserEmail;
 
             newUser.accountAttributes = accountAttributes;
@@ -508,9 +554,20 @@ namespace Rim.Bws.Samples
             newUsers.Add(newUser);
             createUsersRequest.newUsers = newUsers.ToArray();
 
-            Console.Error.WriteLine("Calling {0}...", bwsApiName);
-            CreateUsersResponse response = bwsService.createUsers(createUsersRequest);
-            Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+            CreateUsersResponse response = null;
+
+            try
+            {
+                logRequest(bwsApiName);
+                response = bwsService.createUsers(createUsersRequest);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
+            }
+            catch (WebException e)
+            {
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+            }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
@@ -518,8 +575,8 @@ namespace Rim.Bws.Samples
                 {
                     foreach (IndividualResponse individualResponse in response.individualResponses)
                     {
-                        Console.WriteLine("User created with UID \"{0}\" using Email Address \"{1}\"",
-                            individualResponse.uid, CreateNewUserEmail);
+                        displayResult("User created with UID \"{0}\" using Email Address \"{1}\"",
+                            individualResponse.uid, accountAttributes.emailAddress);
                     }
 
                     returnValue = true;
@@ -527,19 +584,18 @@ namespace Rim.Bws.Samples
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
                 if (response.individualResponses != null)
                 {
                     foreach (IndividualResponse individualResponse in response.individualResponses)
                     {
-                        Console.Error.WriteLine("Individual Response - Code: \"{0}\", Message: \"{1}\"",
+                        logMessage("Individual Response - Code: \"{0}\", Message: \"{1}\"",
                             individualResponse.returnStatus.code, individualResponse.returnStatus.message);
                     }
                 }
             }
 
-            Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+            logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
             return returnValue;
         }
 
@@ -551,7 +607,7 @@ namespace Rim.Bws.Samples
         {
             const string methodName = "GetSystemInfo()";
             const string bwsApiName = "bwsService.getSystemInfo()";
-            Console.Error.WriteLine("Entering {0}", methodName);
+            logMessage("Entering {0}", methodName);
             bool returnValue = false;
 
             GetSystemInfoRequest request = new GetSystemInfoRequest();
@@ -573,9 +629,9 @@ namespace Rim.Bws.Samples
              */
             try
             {
-                Console.Error.WriteLine("Calling {0}...", bwsApiName);
+                logRequest(bwsApiName);
                 response = bwsService.getSystemInfo(request);
-                Console.Error.WriteLine("...{0} returned \"{1}\"", bwsApiName, response.returnStatus.code);
+                logResponse(bwsApiName, response.returnStatus.code, response.metadata);
             }
             catch (WebException e)
             {
@@ -583,60 +639,117 @@ namespace Rim.Bws.Samples
                 // Handle authentication failure.
                 if (webResponse != null && webResponse.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    Console.Error.WriteLine("Failed to authenticate with the BWS web service");
-                    Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+                    logMessage("Failed to authenticate with the BWS web service");
+                    logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
                     return returnValue;
                 }
-                else
-                {
-                    // Re-throw other exceptions.
-                    throw e;
-                }
-            }
-
-            if (response.metadata != null)
-            {
-                /* 
-                 * Converting response.metadata.executionTime (which is in nano-seconds) into seconds by 
-                 * multiplying it by 10^-9.
-                 */
-                Console.Error.WriteLine("{0} Execution Time: {1:0.0000} seconds", bwsApiName,
-                    (response.metadata.executionTime * Math.Pow(10, -9)));
-                Console.Error.WriteLine("{0} Request UID: {1}", bwsApiName, response.metadata.requestUid);
+                // Log and re-throw exception.
+                logMessage("Exiting {0} with exception \"{1}\"", methodName, e.Message);
+                throw e;
+                
             }
 
             if (response.returnStatus.code.Equals("SUCCESS"))
             {
                 if (response.properties != null && response.properties.Length > 0)
                 {
-                    Console.Error.WriteLine("{0} returned the following properties:", bwsApiName);
+                    logMessage("{0} returned the following properties:", bwsApiName);
                     foreach (Property property in response.properties)
                     {
-                        Console.WriteLine("{0}: {1}", property.name, property.value);
+                        displayResult("{0}: {1}", property.name, property.value);
                     }
 
                     returnValue = true;
                 }
                 else
                 {
-                    Console.Error.WriteLine("No properties in response");
+                    logMessage("No properties in response");
                 }
             }
             else
             {
-                Console.Error.WriteLine("Error: Code: \"{0}\", Message: \"{1}\"", response.returnStatus.code,
-                    response.returnStatus.message);
+                logMessage("Error Message: \"{0}\"", response.returnStatus.message);
             }
 
-            Console.Error.WriteLine("Exiting {0} with value \"{1}\"", methodName, returnValue);
+            logMessage("Exiting {0} with value \"{1}\"", methodName, returnValue);
             return returnValue;
+        }
+
+        /// <summary>
+        /// Creates a string containing the elapsed time since the program started.
+        /// The execution time will be reset to 00:00.000 if the execution time exceeds an hour. 
+        /// <returns>Returns the elapsed time from start of program.</returns>
+        /// </summary>
+        public static String logTime()
+        {
+            String time = startTime.Elapsed.ToString();
+            // trim decimals to 3 digits for seconds
+            time = time.Substring(0, time.IndexOf('.') + 4);
+            // get rid of HH:
+            time = time.Substring(3);
+            return time;
+        }
+
+        /// <summary>
+        /// Prints a log message to stderr. 
+        /// Appends the message to a string containing the elapsed time of the program.
+        /// <param name="format">A string which formats how args will be displayed in the message.</param>
+        /// <param name="args">Array of objects to be displayed in the message.</param>
+        /// </summary>
+        public static void logMessage(String format, params Object[] args)
+        {   //Change output stream if desired
+            TextWriter logStream = Console.Error;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            logStream.WriteLine(logTime() + " " + format, args);
+        }
+
+        /// <summary>
+        /// Prints results to stderr. 
+        /// <param name="format">A string which formats how args will be displayed in the message.</param>
+        /// <param name="args">Array of objects to be displayed in the message.</param>
+        /// </summary>
+        public static void displayResult(String format, params Object[] args)
+        {   //Change output stream if desired
+            TextWriter resultStream = Console.Error;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            resultStream.WriteLine(format, args);
+        }
+
+        /// <summary>
+        /// Logs the calling of an API. 
+        /// <param name="bwsApiName">A string of the API called.</param>
+        /// </summary>
+        public static void logRequest(String bwsApiName)
+        {
+            logMessage("Calling {0}...", bwsApiName);
+        }
+
+        /// <summary>
+        /// Logs various information about an API response. 
+        /// <param name="bwsApiName">A string of the API called.</param>
+        /// <param name="code">The return code from the API called.</param>
+        /// <param name="metadata">The metadata contained in the response object returned from the API called.</param>
+        /// </summary>
+        public static void logResponse(String bwsApiName, String code, ResponseMetadata metadata)
+        {
+            logMessage("...{0} returned \"{1}\"", bwsApiName, code);
+            if (metadata != null)
+            {
+                /* 
+                 * Converting response.metadata.executionTime (which is in nano-seconds) into seconds by 
+                 * multiplying it by 10^-9.
+                 */
+                logMessage("Execution Time: {0:0.0000} seconds", (metadata.executionTime * Math.Pow(10, -9)));
+                logMessage("Request UID: {0}", metadata.requestUid);
+            }
         }
 
         /// <summary>
         /// The Main function.
         /// </summary>
-        static int Main(string [] args)
+        static int Main(string[] args)
         {
+            startTime.Start();
             // Return codes.
             const int success = 0;
             const int failure = 1;
@@ -644,10 +757,21 @@ namespace Rim.Bws.Samples
 
             /* 
              * Flags that are used to determine whether or not 
-             * CreateUser() and DisplayUserDetails() gets called.
+             * CreateUser() and DisplayUserDetails() get called.
              */
-            bool createNewUser = true;
+            bool createNewUser = false;
             bool displayUserDetails = true;
+
+            // Hostname to use when connecting to web service.        
+            BWSHostName = "<BWSHostName>"; // e.g. BWSHostName = "server01.yourcompany.net".        
+            Username = "<username>"; // e.g. Username = "admin".        
+            Password = "<password>"; // e.g. Password = "password".
+
+            // Email address used to create a new user with the createUsers() API call.
+            CreateNewUserEmail = "\"user01@example.net\"";
+
+            // Email address used to identify the user to find with the getUsersDetail() API call.
+            DisplayUserDetailsEmail = "\"user01@example.net\"";
 
             /* 
              * BWS Host certificate must be installed on the client machine before running this sample code, otherwise
@@ -656,49 +780,49 @@ namespace Rim.Bws.Samples
              */
             try
             {
-                Console.Error.WriteLine("Initializing web services...");
+                logMessage("Initializing web services...");
                 if (Setup())
                 {
                     /* 
                      * Demonstrate call to bwsService.getSystemInfo().
                      * This is also the first authenticated call in the client application.
                      */
-                    Console.Error.WriteLine("Getting system information...");
+                    logMessage("Getting system information...");
                     if (GetSystemInfo())
                     {
                         if (createNewUser)
                         {
-                            Console.Error.WriteLine("Creating a user...");
+                            logMessage("Creating a user...");
 
                             // Demonstrate call to bwsService.createUsers() API.
                             if (!CreateUser())
                             {
-                                Console.Error.WriteLine("Error: CreateUser() failed");
+                                logMessage("Error: CreateUser() failed");
                                 returnCode = failure;
                             }
                         }
 
                         if (displayUserDetails)
                         {
-                            Console.Error.WriteLine("Displaying a user's details...");
+                            logMessage("Displaying a user's details...");
 
                             // Demonstrate call to bwsService.getUsers() and bwsService.getUsersDetail() APIs.
                             if (!DisplayUserDetails())
                             {
-                                Console.Error.WriteLine("Error: DisplayUserDetails() failed");
+                                logMessage("Error: DisplayUserDetails() failed");
                                 returnCode = failure;
                             }
                         }
                     }
                     else
                     {
-                        Console.Error.WriteLine("Error: GetSystemInfo() failed");
+                        logMessage("Error: GetSystemInfo() failed");
                         returnCode = failure;
                     }
                 }
                 else
                 {
-                    Console.Error.WriteLine("Error: Setup() failed");
+                    logMessage("Error: Setup() failed");
                     returnCode = failure;
                 }
             }

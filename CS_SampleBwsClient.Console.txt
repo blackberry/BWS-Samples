@@ -1,60 +1,77 @@
-Initializing web services...
-Entering Setup()
-Entering GetAuthenticator()
-Calling bwsUtilService.getAuthenticators()...
-...bwsUtilService.getAuthenticators() returned "SUCCESS"
-Exiting GetAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
-Entering GetEncodedUserName()
-Calling bwsUtilService.getEncodedUsername()...
-...bwsUtilService.getEncodedUsername() returned "SUCCESS"
-Exiting GetEncodedUserName() with value "5,0,0,1,1,0;admin00"
-Exiting Setup() with value "True"
-Getting system information...
-Entering GetSystemInfo()
-Calling bwsService.getSystemInfo()...
-...bwsService.getSystemInfo() returned "SUCCESS"
-bwsService.getSystemInfo() Execution Time: 0.0524 seconds
-bwsService.getSystemInfo() Request UID: a7295aad-8946-42cc-8165-9fd527bc4d30
-bwsService.getSystemInfo() returned the following properties:
-BWS Version: 6.0.0.262
-BAS Version: 6.0.0.265
+00:00.002 Initializing web services...
+00:00.007 Entering Setup()
+00:00.008 Initializing BWS web service stub
+00:01.297 BWS web service stub initialized
+00:01.297 Initializing BWSUtil web service stub
+00:01.469 BWSUtil web service stub initialized
+00:01.471 Entering GetAuthenticator()
+00:01.472 Calling bwsUtilService.getAuthenticators()...
+00:01.709 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:01.709 Execution Time: 0.0259 seconds
+00:01.710 Request UID: 02cf09fb-748f-4953-b952-9036982bffb3
+00:01.710 Exiting GetAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:01.712 Entering GetEncodedUserName()
+00:01.713 Calling bwsUtilService.getEncodedUsername()...
+00:01.747 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:01.747 Execution Time: 0.0000 seconds
+00:01.748 Request UID: e51b6ea2-9221-4a31-a111-507f74d48599
+00:01.748 Exiting GetEncodedUserName() with value "5,0,0,1,1,0;admin00"
+00:01.753 Exiting Setup() with value "True"
+00:01.753 Getting system information...
+00:01.755 Entering GetSystemInfo()
+00:01.756 Calling bwsService.getSystemInfo()...
+00:02.727 ...bwsService.getSystemInfo() returned "SUCCESS"
+00:02.727 Execution Time: 0.1046 seconds
+00:02.727 Request UID: c3f6cdfb-0aaf-488a-9544-c51ee41b4cf2
+00:02.728 bwsService.getSystemInfo() returned the following properties:
+BWS Version: 5.0.2
+BAS Version: 6.2.0.366
 Mail Platform: Unknown
 Authenticated User Uid: 1
 Supports PlayBook: Yes
-Exiting GetSystemInfo() with value "True"
-Creating a user...
-Entering CreateUser()
-Creating a user with email address ""user01@example.net""
-Calling bwsService.createUsers()...
-...bwsService.createUsers() returned "SUCCESS"
-User created with UID "7" using Email Address ""user01@example.net""
-Exiting CreateUser() with value "True"
-Displaying a user's details...
-Entering DisplayUserDetails()
-Entering GetUser()
-Calling bwsService.getUsers()...
-...bwsService.getUsers() returned "SUCCESS"
-Exiting GetUser() with User object (UID "2")
-Displaying details for user with email address ""user01@example.net""
-Calling bwsService.getUsersDetail()...
-...bwsService.getUsersDetail() returned "SUCCESS"
+Email Address Is Mandatory: No
+Email Address Is Unique: No
+External User Uid Is Searchable: Yes
+00:02.729 Exiting GetSystemInfo() with value "True"
+00:02.729 Creating a user...
+00:02.732 Entering CreateUser()
+00:02.733 Creating a user with email address ""BRKTest0003@core.sqm.testnet.rim.net""
+00:02.734 Calling bwsService.createUsers()...
+00:04.397 ...bwsService.createUsers() returned "SUCCESS"
+00:04.398 Execution Time: 1.6135 seconds
+00:04.398 Request UID: 379c4c12-95b7-4d6a-a27a-8fe827448775
+User created with UID "16" using Email Address ""BRKTest0003@core.sqm.testnet.rim.net""
+00:04.399 Exiting CreateUser() with value "True"
+00:04.399 Displaying a user's details...
+00:04.406 Entering DisplayUserDetails()
+00:04.406 Displaying details for user with email address ""BRKTest0001@core.sqm.testnet.rim.net""
+00:04.408 Entering GetUser()
+00:04.410 Calling bwsService.getUsers()...
+00:04.654 ...bwsService.getUsers() returned "SUCCESS"
+00:04.654 Execution Time: 0.0853 seconds
+00:04.655 Request UID: b2163ef4-8a76-4f1b-af34-2b68f7016318
+00:04.655 Exiting GetUser() with User object (UID "2")
+00:04.656 Calling bwsService.getUsersDetail()...
+00:05.461 ...bwsService.getUsersDetail() returned "SUCCESS"
+00:05.461 Execution Time: 0.3601 seconds
+00:05.461 Request UID: fcb55dbf-3b0e-4623-aa88-e32eb99d91cc
 User details:
-Display Name: User 01
+Display Name: BRKTest0001 BRKTest0001
 User UID: 2
-Last Login Time: 03/19/2012 18:03:58
+Last Login Time: 10/26/2012 18:32:42
 Indirect IT policy names: Default
 User's device details:
 Device 1 data
 ---------------
-PIN: 12G34H56
-Model: PB 16GB WIFI
+PIN: 332DBC0D
+Model: BlackBerry® PlayBook™ tablet 16GB
 Phone Number:
 Active Carrier:
-Network: Wi-Fi
-Serial Number: 0
+Network: CDMA,GSM,LTE,HSPA+,Wi-Fi,Bluetooth
+Serial Number: 990001240049197
 State: RUNNING
 IT Policy Name: Default
-Platform Version: 2.0.0.190 (Platform 2.0.0.190)
+Platform Version: 10.0.9.785
 Total Messages Expired: 0
 Total Messages Filtered: 0
 Total Messages Forwarded: 0
@@ -64,7 +81,7 @@ Total Messages Sent: 0
 User's account details:
 Account 1 data
 ---------------
-Email Address: user01@example.net
+Email Address: BRKTest0001@core.sqm.testnet.rim.net
 ---------------
-Exiting DisplayUserDetails() with value "True"
+00:05.496 Exiting DisplayUserDetails() with value "True"
 Press Enter to exit
