@@ -11,10 +11,42 @@ All APIs shared in this repository are Open Source under the  [Apache 2.0 Licens
 
 Each sample added to the repository is available in both Java and C#.
 
+## File Descriptions
+
+### 10.1.3 and earlier
+
+ - AuthenticationSample.cs - .NET code sample for authentication methods
+ - AuthenticationSample.java - Java code sample for authentication methods
+ - AuthenticationSample_CS.Console.text - Output for AuthenticationSample.cs
+ - AuthenticationSample_Java.Console.txt - Output for AuthenticationSample.java
+ - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
+ - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
+ - SampleBwsClient.cs - .NET code sample for creating a user
+ - SampleBwsClient.java - Java code sample for creating a user
+ - SampleBwsClient_CS.Console.txt - Output for SampleBwsClient.cs
+ - SampleBwsClient_Java.Console.txt - Output for SampleBwsClient.java
+
+
+### 10.2
+
+ - AuthenticationSample.cs - .NET code sample for authentication methods
+ - AuthenticationSample.java - Java code sample for authentication methods
+ - AuthenticationSample_CS.ConsoleBDS.text - Output for AuthenticationSample.cs (BDS)
+ - AuthenticationSample_CS.ConsoleUDS.text - Output for AuthenticationSample.cs (UDS)
+ - AuthenticationSample_Java.ConsoleBDS.txt - Output for AuthenticationSample.java (BDS)
+ - AuthenticationSample_Java.ConsoleUDS.txt - Output for AuthenticationSample.java (UDS)
+ - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
+ - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
+ - SampleBwsClient.cs - .NET code sample for creating a user
+ - SampleBwsClient.java - Java code sample for creating a user
+ - SampleBwsClient_CS.ConsoleBDS.txt - Output for SampleBwsClient.cs (BDS)
+ - SampleBwsClient_CS.ConsoleUDS.txt - Output for SampleBwsClient.cs (UDS)
+ - SampleBwsClient_Java.ConsoleBDS.txt - Output for SampleBwsClient.java (BDS)
+ - SampleBwsClient_Java.ConsoleUDS.txt - Output for SampleBwsClient.java (UDS)
 
 **Repository Committers** 
 
-* [George Grosso](https://github.com/ggrosso)
+* [Marco Cacciacarro](https://github.com/mcacciacarro)
 
 
 ## Bug Reporting and Feature Requests
