@@ -1,0 +1,111 @@
+00:00.057 Attempting BlackBerry Administration Service authentication
+00:00.066 Initializing web services...
+00:00.067 Entering setup()
+00:00.068 Initializing BWS web service stub
+Nov 14, 2013 3:27:13 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:06.748 BWS web service stub initialized
+00:06.748 Initializing BWSUtil web service stub
+Nov 14, 2013 3:27:18 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:09.394 BWSUtil web service stub initialized
+00:09.477 Entering getAuthenticator()
+00:09.477 Calling _bwsUtil.getAuthenticators()...
+00:10.283 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:10.283 Execution Time: 0.0389 seconds
+00:10.285 Request UID: 163291c9-2b97-46b2-b787-7643d7f154c1
+00:10.285 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:10.286 Entering getEncodedUserName()
+00:10.286 Calling _bwsUtil.getEncodedUsername()...
+00:10.304 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:10.304 Execution Time: 0.0008 seconds
+00:10.305 Request UID: 264ebe80-9439-4035-82c5-42549c443205
+00:10.306 Exiting getEncodedUserName()
+00:10.306 Exiting setup() with value "true"
+00:10.307 Entering getSystemInfo()
+00:10.307 Calling _bws.getSystemInfo()...
+00:10.695 ..._bws.getSystemInfo() returned "SUCCESS"
+00:10.696 Execution Time: 0.2533 seconds
+00:10.696 Request UID: 40ff8832-77a0-423d-8a5e-2767cd3239a1
+00:10.696 Exiting getSystemInfo()
+00:10.697 Attempting authenticated BWS call to echo()...
+00:10.697 Entering echo()
+00:10.697 Calling _bws.echo()...
+00:10.721 ..._bws.echo() returned "SUCCESS"
+00:10.722 Execution Time: 0.0006 seconds
+00:10.722 Request UID: 79e3d9b6-0007-47ef-aa29-5e9c05aaf682
+00:10.723 Exiting echo() with value "true"
+00:10.723 Authenticated call succeeded!
+00:10.723 
+00:10.724 Attempting Active Directory authentication
+00:10.724 Initializing web services...
+00:10.725 Entering setup()
+00:10.725 Initializing BWS web service stub
+Nov 14, 2013 3:27:22 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:11.074 BWS web service stub initialized
+00:11.075 Initializing BWSUtil web service stub
+Nov 14, 2013 3:27:22 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:11.150 BWSUtil web service stub initialized
+00:11.152 Entering getAuthenticator()
+00:11.152 Calling _bwsUtil.getAuthenticators()...
+00:11.321 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:11.322 Execution Time: 0.0447 seconds
+00:11.322 Request UID: 7066c5ed-5db4-4e12-84c6-7ad3e3976140
+00:11.323 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:11.323 Entering getEncodedUserName()
+00:11.324 Calling _bwsUtil.getEncodedUsername()...
+00:11.342 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:11.343 Execution Time: 0.0009 seconds
+00:11.343 Request UID: 8482d9ad-741e-453f-82c0-e2c166f3a63d
+00:11.344 Exiting getEncodedUserName()
+00:11.344 Exiting setup() with value "true"
+00:11.344 Attempting authenticated BWS call to echo()...
+00:11.345 Entering echo()
+00:11.345 Calling _bws.echo()...
+00:11.511 ..._bws.echo() returned "SUCCESS"
+00:11.512 Execution Time: 0.0015 seconds
+00:11.512 Request UID: 5d0d2c2a-6cac-41b4-9784-2e2362b6df44
+00:11.513 Exiting echo() with value "true"
+00:11.513 Authenticated call succeeded!
+00:11.513 
+00:11.514 Attempting Active Directory authentication using SSO credentials
+00:11.517 Username (case sensitive): User01
+00:11.518 Domain: domain.example.com
+00:11.518 Entering getBase64EncodedSpnegoToken
+00:12.334 Exiting getBase64EncodedSpnegoToken with a token
+00:12.334 Initializing web services...
+00:12.335 Entering setup()
+00:12.335 Initializing BWS web service stub
+Nov 14, 2013 3:27:23 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:12.644 BWS web service stub initialized
+00:12.645 Initializing BWSUtil web service stub
+Nov 14, 2013 3:27:24 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:12.725 BWSUtil web service stub initialized
+00:12.727 Entering getAuthenticator()
+00:12.727 Calling _bwsUtil.getAuthenticators()...
+00:12.888 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:12.889 Execution Time: 0.0284 seconds
+00:12.889 Request UID: a14c9124-4683-433f-816c-0ade025ac0d7
+00:12.890 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:12.890 Entering getEncodedUserName()
+00:12.890 Calling _bwsUtil.getEncodedUsername()...
+00:12.906 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:12.906 Execution Time: 0.0006 seconds
+00:12.906 Request UID: 5ed32579-d3d5-4621-8164-ca8ac4336743
+00:12.907 Exiting getEncodedUserName()
+00:12.907 Exiting setup() with value "true"
+00:12.907 Attempting authenticated BWS call to echo()...
+00:12.907 Entering echo()
+00:12.908 Calling _bws.echo()...
+00:14.054 ..._bws.echo() returned "SUCCESS"
+00:14.055 Execution Time: 0.0011 seconds
+00:14.055 Request UID: a341cb8c-efd1-4376-a3e7-ebd589bc6cfc
+00:14.055 Exiting echo() with value "true"
+00:14.055 Authenticated call succeeded!
+00:14.056 
+Exiting sample.
+Press Enter to exit

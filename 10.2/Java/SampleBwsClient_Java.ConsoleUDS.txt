@@ -1,0 +1,90 @@
+00:00.043 Initializing web services...
+00:00.051 Entering setup()
+00:00.052 Initializing BWS web service stub
+Nov 07, 2013 9:00:17 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:04.412 BWS web service stub initialized
+00:04.412 Initializing BWSUtil web service stub
+Nov 07, 2013 9:00:20 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:07.264 BWSUtil web service stub initialized
+00:07.314 Entering getAuthenticator()
+00:07.314 Calling _bwsUtil.getAuthenticators()...
+00:08.378 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:08.378 Execution Time: 0.1088 seconds
+00:08.379 Request UID: 5f23158a-5173-4a81-a34a-8d078814a604
+00:08.380 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:08.380 Entering getEncodedUserName()
+00:08.380 Calling _bwsUtil.getEncodedUsername()...
+00:08.406 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:08.407 Execution Time: 0.0012 seconds
+00:08.407 Request UID: 3489abfd-5123-4da3-a7ab-584ddda47316
+00:08.407 Exiting getEncodedUserName() with value "5,7,4;admindefaultpass"
+00:08.408 Exiting setup() with value "true"
+00:08.408 Getting system information...
+00:08.408 Entering getSystemInfo()
+00:08.408 Calling _bws.getSystemInfo()...
+00:08.690 ..._bws.getSystemInfo() returned "SUCCESS"
+00:08.690 Execution Time: 0.0869 seconds
+00:08.690 Request UID: f19d2440-decf-4794-b9ff-70823b14b214
+00:08.691 _bws.getSystemInfo() returned the following properties:
+BUDS Version: 10.2.0.16
+BWS Version: 10.2.0.16
+Authenticated User Uid: 3
+UiHomePageUri: https://server.domain.example.net:6443/index.do
+UiUserDetailPageUri: https://server.domain.example.net:6443/index.do?uid={user.uid}
+UiUserDeviceDetailPageUri: https://server.domain.example.net:6443/index.do?uid={user.uid}&did={device.uid}
+Email Address Is Mandatory: No
+Email Address Is Unique: No
+External User Uid Is Searchable: Yes
+Directory Is Configured: Yes
+External User Uid Field Name: uid
+00:08.692 Exiting getSystemInfo() with value "true"
+00:08.692 Creating a user...
+00:08.692 Entering createUser()
+00:08.693 Email address set to "user02@example.net"
+00:08.693 Calling _bws.createUsers()...
+00:08.982 ..._bws.createUsers() returned "SUCCESS"
+00:08.983 Execution Time: 0.2615 seconds
+00:08.983 Request UID: cc13309a-1aa9-4073-9929-f506319e2efc
+User created with UID "29"
+Email address used in creation is "user02@example.net"
+00:08.983 Exiting createUser() with value "true"
+00:08.984 Displaying a user's details...
+00:08.984 Entering displayUserDetails()
+00:08.984 Displaying details for user with email address "user01@example.net"
+00:08.984 Entering getUser()
+00:08.984 Calling _bws.getUsers()...
+00:09.295 ..._bws.getUsers() returned "SUCCESS"
+00:09.296 Execution Time: 0.2355 seconds
+00:09.296 Request UID: 30042f39-eed1-44a9-bbb8-de381d4225ce
+00:09.296 Exiting getUser() with User object (UID "6")
+00:09.296 Calling _bws.getUsersDetail()...
+00:09.689 ..._bws.getUsersDetail() returned "SUCCESS"
+00:09.690 Execution Time: 0.2460 seconds
+00:09.690 Request UID: a5b9a4fb-2a3e-49e5-9e2a-02612fe6fa91
+User details:
+Display Name: user01
+User UID: 6
+Indirect IT policy names: Default
+User's device details:
+Device 1 data
+---------------
+Model: iPhone 4 (GSM)
+Phone Number: +5195550100
+Active Carrier: Rogers
+Serial Number: 83136JRTA4S
+State: RUNNING
+Total Messages Expired: 0
+Total Messages Filtered: 0
+Total Messages Forwarded: 0
+Total Messages Pending: 0
+Total Messages Sent: 0
+---------------
+User's account details:
+Account 1 data
+---------------
+Email Address: "user01@example.net"
+---------------
+00:09.695 Exiting displayUserDetails() with value "true"
+Press Enter to exit

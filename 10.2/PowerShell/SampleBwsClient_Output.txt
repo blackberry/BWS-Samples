@@ -1,0 +1,22 @@
+Enter BWSHostName:Port (E.g. BWS.host.name:38443) : server01.example.net:38443
+Enter Username : admin
+Enter Password : ********
+Entering Main()...
+Entering Setup()...
+Entering GetAuthenticator()...
+Entering bwsUtilService.getAuthenticators()...
+bwsUtilService.getAuthenticators() returned SUCCESS
+...exiting GetAuthenticator() with value SUCCESS
+Entering GetEncodedUserName()...
+Entering bwsUtilService.getEncodedUsername()...
+bwsUtilService.getEncodedUsername() returned SUCCESS
+...exiting GetEncodedUserName() with value SUCCESS
+...exiting Setup() with value 'True'
+-------------------
+Display Name: System Administrator
+-------------------
+Display Name: Karla Tetzel
+Email Address: karla.tetzel@example.net
+PIN: 12G34H56
+Model: BlackBerry Z10
+...exiting Main()
