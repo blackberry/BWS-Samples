@@ -1,0 +1,100 @@
+00:00.005 Attempting BlackBerry Administration Service authentication
+00:00.006 Initializing web services...
+00:00.015 Entering setup()
+00:00.016 Initializing BWS web service stub
+00:01.762 BWS web service stub initialized
+00:01.763 Initializing BWSUtil web service stub
+00:02.166 BWSUtil web service stub initialized
+00:02.171 Entering getAuthenticator()
+00:02.173 Calling bwsUtilService.getAuthenticators()...
+00:02.499 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:02.500 Execution Time: 0.0303 seconds
+00:02.501 Request UID: 52c74ee2-e3b8-424e-b429-9386afeacf59
+00:02.504 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:02.508 Entering getEncodedUserName()
+00:02.511 Calling bwsUtilService.getEncodedUsername()...
+00:02.573 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:02.574 Execution Time: 0.0009 seconds
+00:02.574 Request UID: 606ac43c-0f8c-4819-8019-fb567bf7c724
+00:02.575 Exiting getEncodedUserName()
+00:02.584 Exiting setup() with value "True"
+00:02.588 Entering GetSystemInfo()
+00:02.590 Calling bwsService.getSystemInfo()...
+00:03.953 ...bwsService.getSystemInfo() returned "SUCCESS"
+00:03.953 Execution Time: 0.2316 seconds
+00:03.955 Request UID: 037e2bd7-cea9-4a34-b5a7-f5180d3868a6
+00:03.956 Exiting GetSystemInfo()
+00:03.957 Attempting authenticated BWS call to echo()...
+00:03.959 Entering echo()
+00:03.961 Calling bwsService.echo()...
+00:04.016 ...bwsService.echo() returned "SUCCESS"
+00:04.017 Execution Time: 0.0009 seconds
+00:04.017 Request UID: 36550b9e-e18c-45a3-a48b-c86d7418b3dc
+00:04.018 Exiting echo() with value "True"
+00:04.018 Authenticated call succeeded!
+00:04.019
+00:04.020 Attempting Active Directory authentication
+00:04.021 Initializing web services...
+00:04.022 Entering setup()
+00:04.023 Initializing BWS web service stub
+00:04.024 BWS web service stub initialized
+00:04.024 Initializing BWSUtil web service stub
+00:04.025 BWSUtil web service stub initialized
+00:04.026 Entering getAuthenticator()
+00:04.026 Calling bwsUtilService.getAuthenticators()...
+00:04.091 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:04.092 Execution Time: 0.0393 seconds
+00:04.092 Request UID: 19079a29-d048-4ff3-90e1-c835959891e1
+00:04.093 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:04.093 Entering getEncodedUserName()
+00:04.093 Calling bwsUtilService.getEncodedUsername()...
+00:04.113 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:04.114 Execution Time: 0.0008 seconds
+00:04.114 Request UID: 2c7a3742-4564-4923-902c-2eb40fe85ae2
+00:04.114 Exiting getEncodedUserName()
+00:04.115 Exiting setup() with value "True"
+00:04.115 Attempting authenticated BWS call to echo()...
+00:04.115 Entering echo()
+00:04.115 Calling bwsService.echo()...
+00:05.807 ...bwsService.echo() returned "SUCCESS"
+00:05.807 Execution Time: 0.0005 seconds
+00:05.808 Request UID: c6327086-9f79-430e-995e-3ebd0eb6f5ae
+00:05.808 Exiting echo() with value "True"
+00:05.808 Authenticated call succeeded!
+00:05.808
+00:05.810 Attempting Active Directory authentication using SSO credentials
+00:05.811 Username (case sensitive): User01
+00:05.811 Domain: domain.example.com
+00:05.817 Entering getBase64EncodedSpnegoToken
+00:05.825 Exiting getBase64EncodedSpnegoToken with a token
+00:05.825 Initializing web services...
+00:05.826 Entering setup()
+00:05.826 Initializing BWS web service stub
+00:05.827 BWS web service stub initialized
+00:05.827 Initializing BWSUtil web service stub
+00:05.828 BWSUtil web service stub initialized
+00:05.828 Entering getAuthenticator()
+00:05.828 Calling bwsUtilService.getAuthenticators()...
+00:05.874 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:05.874 Execution Time: 0.0281 seconds
+00:05.875 Request UID: 478471b6-6d5f-4ed4-88d9-246f2d842abf
+00:05.875 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:05.875 Entering getEncodedUserName()
+00:05.876 Calling bwsUtilService.getEncodedUsername()...
+00:05.889 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:05.889 Execution Time: 0.0005 seconds
+00:05.889 Request UID: 7bb4f79f-0de3-4e9f-9fd1-a2966f71cc73
+00:05.889 Exiting getEncodedUserName()
+00:05.889 Exiting setup() with value "True"
+00:05.889 Attempting authenticated BWS call to echo()...
+00:05.890 Entering echo()
+00:05.890 Calling bwsService.echo()...
+00:06.866 ...bwsService.echo() returned "SUCCESS"
+00:06.866 Execution Time: 0.0006 seconds
+00:06.867 Request UID: 2570dea6-99b2-4d31-8f1f-c400e92d3ee6
+00:06.868 Exiting echo() with value "True"
+00:06.868 Authenticated call succeeded!
+00:06.869
+Exiting sample.
+Press Enter to exit
+
