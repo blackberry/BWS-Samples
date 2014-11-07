@@ -9,39 +9,39 @@ All APIs shared in this repository are Open Source under the  [Apache 2.0 Licens
 
 ## Code Organization
 
-Each sample added to the repository is available in both Java and C#. Samples for 10.2 have different sets of output for both BDS and UDS.
+Each sample added to the repository is available in both Java and C#. As of 10.2, some samples are also available for PowerShell. Samples for 10.2 have different sets of output for both BDS and UDS.
 
 ## 10.2 Samples
 
 ### C&#35;
 
-#### AuthenticationSample
+AuthenticationSample
  - AuthenticationSample.cs - .NET code sample for authentication methods
  - AuthenticationSample_CS.ConsoleBDS.text - Output for AuthenticationSample.cs (BDS)
  - AuthenticationSample_CS.ConsoleUDS.text - Output for AuthenticationSample.cs (UDS)
  
-#### SampleBwsClient
+SampleBwsClient
  - SampleBwsClient.cs - .NET code sample for creating a user
  - SampleBwsClient_CS.ConsoleBDS.txt - Output for SampleBwsClient.cs (BDS)
  - SampleBwsClient_CS.ConsoleUDS.txt - Output for SampleBwsClient.cs (UDS)
 
 ### Java 
 
-#### AuthenticationSample
+AuthenticationSample
  - AuthenticationSample.java - Java code sample for authentication methods
  - AuthenticationSample_Java.ConsoleBDS.txt - Output for AuthenticationSample.java (BDS)
  - AuthenticationSample_Java.ConsoleUDS.txt - Output for AuthenticationSample.java (UDS)
  - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
  - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
  
-#### SampleBwsClient
+SampleBwsClient
  - SampleBwsClient.java - Java code sample for creating a user
  - SampleBwsClient_Java.ConsoleBDS.txt - Output for SampleBwsClient.java (BDS)
  - SampleBwsClient_Java.ConsoleUDS.txt - Output for SampleBwsClient.java (UDS)
 
 ### PowerShell
 
-#### SampleBwsClient
+SampleBwsClient
  - SampleBwsClient.ps1 - PowerShell code sample for creating a user
  - SampleBwsClient_Output.txt - Output for SampleBwsClient.ps1
 
@@ -49,23 +49,23 @@ Each sample added to the repository is available in both Java and C#. Samples fo
 
 ### C&#35;
 
-#### AuthenticationSample
+AuthenticationSample
  - AuthenticationSample.cs - .NET code sample for authentication methods
  - AuthenticationSample_CS.Console.text - Output for AuthenticationSample.cs
  
-#### SampleBwsClient
+SampleBwsClient
  - SampleBwsClient.cs - .NET code sample for creating a user
  - SampleBwsClient_CS.Console.txt - Output for SampleBwsClient.cs
  
 ### Java
 
-#### AuthenticationSample
+AuthenticationSample
  - AuthenticationSample.java - Java code sample for authentication methods
  - AuthenticationSample_Java.Console.txt - Output for AuthenticationSample.java
  - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
  - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
 
-#### SampleBwsClient
+SampleBwsClient
  - SampleBwsClient.java - Java code sample for creating a user
  - SampleBwsClient_Java.Console.txt - Output for SampleBwsClient.java
 
