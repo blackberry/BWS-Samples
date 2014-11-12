@@ -1,0 +1,21 @@
+Enter BWSHostName:Port (E.g. BWS.host.name:18084) : server.domain.example.net:18084
+Enter Username : username
+Enter Password : *********
+Entering Main()...
+Entering Setup()...
+Entering GetAuthenticator()...
+Entering bwsUtilService.getAuthenticators()...
+bwsUtilService.getAuthenticators() returned SUCCESS
+...exiting GetAuthenticator() with value SUCCESS
+Entering GetEncodedUserName()...
+Entering bwsUtilService.getEncodedUsername()...
+bwsUtilService.getEncodedUsername() returned SUCCESS
+...exiting GetEncodedUserName() with value SUCCESS
+...exiting Setup() with value 'True'
+-------------------
+Display Name: user01
+Email Address: user01@example.net
+-------------------
+Display Name: user02
+Email Address: user02@example.net
+...exiting Main()
