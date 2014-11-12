@@ -1,0 +1,101 @@
+00:00.001 Attempting BlackBerry Administration Service authentication
+00:00.002 Initializing web services...
+00:00.004 Entering setup()
+00:00.004 Initializing BWS web service stub
+00:01.227 BWS web service stub initialized
+00:01.227 Initializing BWSUtil web service stub
+00:01.336 BWSUtil web service stub initialized
+00:01.337 Entering getAuthenticator()
+00:01.338 Calling bwsUtilService.getAuthenticators()...
+00:05.918 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:05.919 Execution Time: 0.0814 seconds
+00:05.919 Request UID: 7c61f06a-1878-4179-a836-78e33dde917f
+00:05.919 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:05.920 Entering getEncodedUserName()
+00:05.921 Calling bwsUtilService.getEncodedUsername()...
+00:05.961 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:05.961 Execution Time: 0.0056 seconds
+00:05.961 Request UID: 4dccb1d1-eb7c-4616-9022-90b6d8fb5785
+00:05.962 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
+00:05.962 Exiting getEncodedUserName()
+00:05.962 Exiting setup() with value "True"
+00:05.964 Entering GetSystemInfo()
+00:05.964 Calling bwsService.getSystemInfo()...
+00:06.263 ...bwsService.getSystemInfo() returned "SUCCESS"
+00:06.264 Execution Time: 0.0864 seconds
+00:06.264 Request UID: f66bbdb5-96d8-457c-a3dc-31f261fa7965
+00:06.264 ServerType found: BES12
+00:06.265 Exiting GetSystemInfo()
+00:06.265 Attempting authenticated BWS call to echo()...
+00:06.266 Entering echo()
+00:06.266 Calling bwsService.echo()...
+00:06.303 ...bwsService.echo() returned "SUCCESS"
+00:06.303 Execution Time: 0.0062 seconds
+00:06.303 Request UID: 7aa1ce7c-f289-41e2-8c95-6cd0673f69b3
+00:06.304 Exiting echo() with value "True"
+00:06.304 Authenticated call succeeded!
+00:06.304
+00:06.304 Attempting Active Directory authentication
+00:06.304 Initializing web services...
+00:06.304 Entering setup()
+00:06.304 Initializing BWS web service stub
+00:06.304 BWS web service stub initialized
+00:06.304 Initializing BWSUtil web service stub
+00:06.305 BWSUtil web service stub initialized
+00:06.305 Entering getAuthenticator()
+00:06.305 Calling bwsUtilService.getAuthenticators()...
+00:06.417 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:06.418 Execution Time: 0.0888 seconds
+00:06.418 Request UID: 13d03832-42d5-4c85-8a7d-5dc865096025
+00:06.418 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:06.418 Entering getEncodedUserName()
+00:06.418 Calling bwsUtilService.getEncodedUsername()...
+00:06.447 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:06.448 Execution Time: 0.0067 seconds
+00:06.448 Request UID: 53e1a9ab-4e8b-40e5-b21c-a3addecb37a6
+00:06.448 Decoded value of encoded username "provider="ad" auth="ACTIVE_DIRECTORY" tenant="tenant" domain="server.domain.example.net" username="userna
+me" "
+00:06.448 Exiting getEncodedUserName()
+00:06.448 Exiting setup() with value "True"
+00:06.448 Attempting authenticated BWS call to echo()...
+00:06.448 Entering echo()
+00:06.448 Calling bwsService.echo()...
+00:08.077 ...bwsService.echo() returned "SUCCESS"
+00:08.077 Execution Time: 0.0066 seconds
+00:08.077 Request UID: 567e88fa-8cfc-429f-8238-5040ca90b32e
+00:08.078 Exiting echo() with value "True"
+00:08.078 Authenticated call succeeded!
+00:08.078
+00:08.079 Attempting LDAP authentication
+00:08.080 Initializing web services...
+00:08.080 Entering setup()
+00:08.081 Initializing BWS web service stub
+00:08.082 BWS web service stub initialized
+00:08.083 Initializing BWSUtil web service stub
+00:08.083 BWSUtil web service stub initialized
+00:08.084 Entering getAuthenticator()
+00:08.085 Calling bwsUtilService.getAuthenticators()...
+00:08.199 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:08.200 Execution Time: 0.0861 seconds
+00:08.201 Request UID: 9a18a1b8-13c5-406a-927e-64b704724499
+00:08.201 Exiting getAuthenticator() with Authenticator object (Name "LDAP")
+00:08.202 Entering getEncodedUserName()
+00:08.203 Calling bwsUtilService.getEncodedUsername()...
+00:08.250 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:08.250 Execution Time: 0.0113 seconds
+00:08.251 Request UID: 63b92d37-1ad0-4d95-a667-2a3ace9cc0f8
+00:08.252 Decoded value of encoded username "provider="ldap" auth="LDAP" tenant="tenant" username="username" "
+00:08.253 Exiting getEncodedUserName()
+00:08.254 Exiting setup() with value "True"
+00:08.254 Attempting authenticated BWS call to echo()...
+00:08.256 Entering echo()
+00:08.257 Calling bwsService.echo()...
+00:08.714 ...bwsService.echo() returned "SUCCESS"
+00:08.715 Execution Time: 0.0510 seconds
+00:08.716 Request UID: f82d48af-1c2d-4d6b-a14c-d4f2a1441fa3
+00:08.717 Exiting echo() with value "True"
+00:08.718 Authenticated call succeeded!
+00:08.718
+Exiting sample.
+Press Enter to exit
+

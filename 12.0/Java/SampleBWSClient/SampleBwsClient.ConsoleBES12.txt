@@ -1,0 +1,94 @@
+00:00.021 Initializing web services...
+00:00.024 Entering setup()
+00:00.025 Initializing BWS web service stub
+Nov 05, 2014 11:08:28 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:02.661 BWS web service stub initialized
+00:02.661 Initializing BWSUtil web service stub
+Nov 05, 2014 11:08:30 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:03.632 BWSUtil web service stub initialized
+00:03.678 Entering getAuthenticator()
+00:03.678 Calling _bwsUtil.getAuthenticators()...
+00:04.888 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:04.888 Execution Time: 0.4864 seconds
+00:04.889 Request UID: 2011e77a-ff34-482b-bb44-78d2970d4df6
+00:04.889 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:04.889 Entering getEncodedUserName()
+00:04.889 Calling _bwsUtil.getEncodedUsername()...
+00:04.921 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:04.921 Execution Time: 0.0068 seconds
+00:04.921 Request UID: 0b0c93b0-40ff-4694-9e55-298ac2bcbffb
+00:04.926 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
+00:04.926 Exiting getEncodedUserName()
+00:04.927 Exiting setup() with value "true"
+00:04.927 Getting system information...
+00:04.927 Entering getSystemInfo()
+00:04.927 Calling _bws.getSystemInfo()...
+00:05.454 ..._bws.getSystemInfo() returned "SUCCESS"
+00:05.454 Execution Time: 0.3789 seconds
+00:05.454 Request UID: 69df2baa-d628-4f0e-ab3e-805241b170b6
+00:05.455 _bws.getSystemInfo() returned the following properties:
+BWS Version: 12.0.0.0
+BAS Version: 12.0.0.0
+Mail Platform: Unknown
+Authenticated User Uid: 9db9158c-0da3-4351-a53d-7890d3804be9
+Supports PlayBook: No
+Email Address Is Mandatory: No
+Email Address Is Unique: Yes
+External User Uid Is Searchable: Yes
+Default Device Activation Type: BLACKBERRY_BALANCE
+Default Device Activation Type Platform: MDM_CONTROLS,Android
+Default Device Activation Type Platform: MDM_CONTROLS,iOS
+Default Device Activation Type Platform: BLACKBERRY_BALANCE,BlackBerry 10
+Default Device Activation Type Platform: MDM_CONTROLS,Windows Phone
+Directory Is Configured: Yes
+External User Uid Field Name: objectGUID
+External User Uid Field Name Directory Name: objectGUID,ActiveDirectory
+External User Uid Field Name Directory Name: uid,LDAP
+Device Activation Url: bcp://server.domain.example.net:443/tenant
+00:05.456 Exiting getSystemInfo() with value "true"
+00:05.456 Creating a user...
+00:05.456 Entering createUser()
+00:05.456 Email address set to "user02@example.net"
+00:05.456 Calling _bws.createUsers()...
+00:12.640 ..._bws.createUsers() returned "SUCCESS"
+00:12.640 Execution Time: 7.1482 seconds
+00:12.640 Request UID: 31b501f5-c52f-4344-9bf5-9e3944030583
+User created with UID "5a2e5850-df21-425d-b925-5960d7d8c1d2"
+Email address used in creation is "user02@example.net"
+00:12.640 Exiting createUser() with value "true"
+00:12.641 Displaying a user's details...
+00:12.641 Entering displayUserDetails()
+00:12.641 Displaying details for user with email address "user01@example.net"
+00:12.641 Entering getUser()
+00:12.641 Calling _bws.getUsers()...
+00:12.689 ..._bws.getUsers() returned "SUCCESS"
+00:12.689 Execution Time: 0.0250 seconds
+00:12.689 Request UID: 44ab519f-6ae4-4146-8766-f31fb7b5ae35
+00:12.690 Exiting getUser() with User object (UID "9db9158c-0da3-4351-a53d-7890d3804be9")
+00:12.690 Calling _bws.getUsersDetail()...
+00:13.200 ..._bws.getUsersDetail() returned "SUCCESS"
+00:13.201 Execution Time: 0.3486 seconds
+00:13.201 Request UID: a6647226-240f-4000-a6ea-65293730791c
+User details:
+Display Name: user01
+User UID: 9db9158c-0da3-4351-a53d-7890d3804be9
+Last Login Time: 11/04/2014 18:40:13
+Indirect IT policy names: Default
+User's device details:
+Device 1 data
+---------------
+PIN: 12G34H56
+Model: Q10
+Serial Number: xxxxxxxxxxxx
+State: RUNNING
+Platform Version: 10.2.1
+---------------
+User's account details:
+Account 1 data
+---------------
+Email Address: "user01@example.net"
+---------------
+00:13.202 Exiting displayUserDetails() with value "true"
+Press Enter to exit
