@@ -34,14 +34,14 @@ Email Address Is Mandatory: No
 Email Address Is Unique: Yes
 External User Uid Is Searchable: Yes
 Default Device Activation Type: BLACKBERRY_BALANCE
-Default Device Activation Type Platform: MDM_CONTROLS,Android
-Default Device Activation Type Platform: MDM_CONTROLS,iOS
-Default Device Activation Type Platform: BLACKBERRY_BALANCE,BlackBerry 10
-Default Device Activation Type Platform: MDM_CONTROLS,Windows Phone
+Default Device Activation Type Platform Android: MDM_CONTROLS
+Default Device Activation Type Platform iOS: MDM_CONTROLS
+Default Device Activation Type Platform BlackBerry 10: BLACKBERRY_BALANCE
+Default Device Activation Type Platform Windows Phone: MDM_CONTROLS
 Directory Is Configured: Yes
-External User Uid Field Name: objectGUID
-External User Uid Field Name Directory Name: objectGUID,ActiveDirectory
-External User Uid Field Name Directory Name: uid,LDAP
+External User Uid Field Name: uid
+External User Uid Field Name Directory Name LDAPName: uid
+External User Uid Field Name Directory Name ActiveDirectoryName: objectGUID
 Device Activation Url: bcp://server.domain.example.net:443/tenant
 00:04.942 Exiting GetSystemInfo() with value "True"
 00:04.942 Creating a user...

@@ -57,7 +57,7 @@ Add-Type -Path "<path to BWS.dll>";
 
 #Create and intitialize the request metadata object.
 $Metadata = New-Object RequestMetadata;
-# Use the version of the BWS.DLL used to generate the proxy, not the version of the server.
+# Use the BWS version of the server that was used to generate the proxy.
 $Metadata.clientVersion = "12.0.0";
 $Metadata.locale = "en_US";
 $Metadata.organizationUid = "0";
@@ -149,13 +149,16 @@ function GetAuthenticator($authenticatorName)
 		
 	if ($response.returnStatus.code.Equals("SUCCESS"))
 	{
-			$authenticator = New-Object Authenticator;
-			foreach ($authenticator in $response.authenticators)
+			if($response.authenticators.Length -gt 0)
 			{
-				if ($authenticator.name -eq $authenticatorName)
+				$authenticator = New-Object Authenticator;
+				foreach ($authenticator in $response.authenticators)
 				{
-					$returnValue = $authenticator;
-					break;
+					if ($authenticator.name -eq $authenticatorName)
+					{
+						$returnValue = $authenticator;
+						break;
+					}
 				}
 			}
 			if ($returnValue -eq $null)
@@ -249,16 +252,20 @@ function DisplayUserDetails($individualUser)
 			$userDetail = $response.individualResponses[0].userDetail;
 			Write-Host([string]::Format("Display Name: {0}", $userDetail.displayName));
 				
-			$account = New-Object Account;
-			foreach ($account in $userDetail.accounts)
+			if ($userDetail.accounts.Length -gt 0)
 			{
-				Write-Host([string]::Format("Email Address: {0}", $account.emailAddress));
+				$account = New-Object Account;
+				foreach ($account in $userDetail.accounts)
+				{
+					if ($account.emailAddress -ne $null)
+					{
+						Write-Host([string]::Format("Email Address: {0}", $account.emailAddress));
+					}
+				}
 			}
 			
 			if ($userDetail.devices.Length -gt 0)
 			{
-				
-				
 				$device = New-Object Device;
 				foreach ($device in $userDetail.devices)
 				{
@@ -267,7 +274,7 @@ function DisplayUserDetails($individualUser)
 				}
 			}
 		}
-		elseif ($response.individualResponses -ne 1)
+		else
 		{
 			Write-Host([string]::Format("Not exactly one user detail result was found for {0}", $individualUser.uid));
 		}
@@ -342,8 +349,8 @@ function Main
 	<#
 	# BWS Host certificate must be installed on the client machine before running this sample code, otherwise
 	# a SSL/TLS secure channel error will be thrown. For more information, see the BlackBerry Web Services for
-	# Enterprise Administration For Microsoft .NET Developers Getting Started Guide.
-	# http://docs.blackberry.com/en/admin/deliverables/60165/index.jsp?name=For+Microsoft+.NET+developers+-+Getting+Started+Guide+-+BlackBerry+Web+Services10.2.2&language=English&userType=2&category=BlackBerry+Web+Services&subCategory=BlackBerry+Web+Services+for+BlackBerry+Enterprise+Service+10
+	# Enterprise Administration For Microsoft .NET Development Guide.
+	# http://docs.blackberry.com/en/admin/deliverables/67947/BlackBerry_Web_Services-Development_Guide-1405523829404-12.0-en.pdf
 	#>
 	Write-Host("Entering Main()...");
 	try

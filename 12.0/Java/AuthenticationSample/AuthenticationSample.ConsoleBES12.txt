@@ -2,11 +2,11 @@
 00:00.026 Initializing web services...
 00:00.026 Entering setup()
 00:00.027 Initializing BWS web service stub
-Nov 05, 2014 10:52:45 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
 00:02.614 BWS web service stub initialized
 00:02.614 Initializing BWSUtil web service stub
-Nov 05, 2014 10:52:47 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
 00:03.558 BWSUtil web service stub initialized
 00:03.603 Entering getAuthenticator()
@@ -43,11 +43,11 @@ INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from c
 00:04.345 Initializing web services...
 00:04.345 Entering setup()
 00:04.346 Initializing BWS web service stub
-Nov 05, 2014 10:52:49 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:35 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
 00:04.467 BWS web service stub initialized
 00:04.467 Initializing BWSUtil web service stub
-Nov 05, 2014 10:52:49 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:35 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
 00:04.505 BWSUtil web service stub initialized
 00:04.506 Entering getAuthenticator()
@@ -77,11 +77,11 @@ INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from c
 00:04.839 Initializing web services...
 00:04.839 Entering setup()
 00:04.840 Initializing BWS web service stub
-Nov 05, 2014 10:52:49 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:35 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
 00:04.912 BWS web service stub initialized
 00:04.912 Initializing BWSUtil web service stub
-Nov 05, 2014 10:52:49 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:58:35 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
 00:04.937 BWSUtil web service stub initialized
 00:04.938 Entering getAuthenticator()
