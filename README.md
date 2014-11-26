@@ -14,39 +14,35 @@ All APIs shared in this repository are Open Source under the  [Apache 2.0 Licens
 
 ## 12.0 Samples
 
-- IN BES12, SSO authentication is not supported. The AuthenticationSample apps still include this functionality for compatibility with BES 10.
+IN BES12, SSO authentication is not supported. The AuthenticationSample apps still include this functionality for compatibility with BES 10.
 
 ### C&#35;
 
 AuthenticationSample
  - AuthenticationSample.cs - .NET code sample for authentication methods
- - AuthenticationSample_CS.ConsoleBDS.text - Output for AuthenticationSample.cs (BDS)
- - AuthenticationSample_CS.ConsoleUDS.text - Output for AuthenticationSample.cs (UDS)
+ - AuthenticationSample.ConsoleBES12.txt - Output for AuthenticationSample.cs
  
 SampleBwsClient
  - SampleBwsClient.cs - .NET code sample for creating a user
- - SampleBwsClient_CS.ConsoleBDS.txt - Output for SampleBwsClient.cs (BDS)
- - SampleBwsClient_CS.ConsoleUDS.txt - Output for SampleBwsClient.cs (UDS)
+ - SampleBwsClient.ConsoleBES12.txt - Output for SampleBwsClient.cs
 
 ### Java 
 
 AuthenticationSample
  - AuthenticationSample.java - Java code sample for authentication methods
- - AuthenticationSample_Java.ConsoleBDS.txt - Output for AuthenticationSample.java (BDS)
- - AuthenticationSample_Java.ConsoleUDS.txt - Output for AuthenticationSample.java (UDS)
+ - AuthenticationSample.ConsoleBES12.txt - Output for AuthenticationSample.java
  - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
  - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
  
 SampleBwsClient
  - SampleBwsClient.java - Java code sample for creating a user
- - SampleBwsClient_Java.ConsoleBDS.txt - Output for SampleBwsClient.java (BDS)
- - SampleBwsClient_Java.ConsoleUDS.txt - Output for SampleBwsClient.java (UDS)
+ - SampleBwsClient.ConsoleBES12.txt - Output for SampleBwsClient.java
 
 ### PowerShell
 
 SampleBwsClient
  - SampleBwsClient.ps1 - PowerShell code sample for creating a user
- - SampleBwsClient_Output.txt - Output for SampleBwsClient.ps1
+ - SampleBwsClient.ConsoleBES12.txt - Output for SampleBwsClient.ps1
  
 
 ## 10.2 Samples
