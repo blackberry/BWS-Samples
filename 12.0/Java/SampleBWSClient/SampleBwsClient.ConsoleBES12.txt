@@ -1,11 +1,11 @@
 00:00.021 Initializing web services...
 00:00.024 Entering setup()
 00:00.025 Initializing BWS web service stub
-Nov 05, 2014 11:08:28 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:57:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
 00:02.661 BWS web service stub initialized
 00:02.661 Initializing BWSUtil web service stub
-Nov 05, 2014 11:08:30 AM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+Nov 13, 2014 3:57:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
 00:03.632 BWSUtil web service stub initialized
 00:03.678 Entering getAuthenticator()
@@ -38,14 +38,14 @@ Email Address Is Mandatory: No
 Email Address Is Unique: Yes
 External User Uid Is Searchable: Yes
 Default Device Activation Type: BLACKBERRY_BALANCE
-Default Device Activation Type Platform: MDM_CONTROLS,Android
-Default Device Activation Type Platform: MDM_CONTROLS,iOS
-Default Device Activation Type Platform: BLACKBERRY_BALANCE,BlackBerry 10
-Default Device Activation Type Platform: MDM_CONTROLS,Windows Phone
+Default Device Activation Type Platform Android: MDM_CONTROLS
+Default Device Activation Type Platform iOS: MDM_CONTROLS
+Default Device Activation Type Platform BlackBerry 10: BLACKBERRY_BALANCE
+Default Device Activation Type Platform Windows Phone: MDM_CONTROLS
 Directory Is Configured: Yes
-External User Uid Field Name: objectGUID
-External User Uid Field Name Directory Name: objectGUID,ActiveDirectory
-External User Uid Field Name Directory Name: uid,LDAP
+External User Uid Field Name: uid
+External User Uid Field Name Directory Name LDAPName: uid
+External User Uid Field Name Directory Name ActiveDirectoryName: objectGUID
 Device Activation Url: bcp://server.domain.example.net:443/tenant
 00:05.456 Exiting getSystemInfo() with value "true"
 00:05.456 Creating a user...
