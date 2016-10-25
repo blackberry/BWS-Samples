@@ -118,7 +118,7 @@ SampleBwsClient
 
 ## Bug Reporting and Feature Requests
 
-If you find a bug in a sample, or have an enhancement request, simply file an [Issue](http://github.rim.net/ggrosso/BWS-CodeSamples/issues) for the sample and send a message (via github messages) to the sample Author(s) to let them know that you have filed an [Issue](http://github.rim.net/ggrosso/BWS-CodeSamples/issues).
+If you find a bug in a sample, or have an enhancement request, simply file an [Issue](http://github.rim.net/cfullerton123/BWS-CodeSamples/issues) for the sample and send a message (via github messages) to the sample Author(s) to let them know that you have filed an [Issue](http://github.rim.net/cfullerton123/BWS-CodeSamples/issues).
 
 ## Disclaimer
 
