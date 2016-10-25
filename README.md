@@ -114,7 +114,8 @@ SampleBwsClient
  
 **Repository Committers** 
 
-* [Wes Barichak](https://github.com/wesbarichak)
+* [Colin Fullerton](https://github.com/cfullerton123)
+* [Andrew Karger](https://github.com/akarger)
 
 ## Bug Reporting and Feature Requests
 
