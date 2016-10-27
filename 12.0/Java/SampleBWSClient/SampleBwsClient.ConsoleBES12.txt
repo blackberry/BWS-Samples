@@ -1,38 +1,39 @@
-00:00.021 Initializing web services...
-00:00.024 Entering setup()
-00:00.025 Initializing BWS web service stub
-Nov 13, 2014 3:57:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+00:00.035 Initializing web services...
+00:00.041 Entering setup()
+00:00.041 Initializing BWS web service stub
+Oct 26, 2016 4:28:15 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
-00:02.661 BWS web service stub initialized
-00:02.661 Initializing BWSUtil web service stub
-Nov 13, 2014 3:57:31 PM org.apache.cxf.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+00:07.073 BWS web service stub initialized
+00:07.074 Initializing BWSUtil web service stub
+Oct 26, 2016 4:28:21 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
 INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
-00:03.632 BWSUtil web service stub initialized
-00:03.678 Entering getAuthenticator()
-00:03.678 Calling _bwsUtil.getAuthenticators()...
-00:04.888 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
-00:04.888 Execution Time: 0.4864 seconds
-00:04.889 Request UID: 2011e77a-ff34-482b-bb44-78d2970d4df6
-00:04.889 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
-00:04.889 Entering getEncodedUserName()
-00:04.889 Calling _bwsUtil.getEncodedUsername()...
-00:04.921 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
-00:04.921 Execution Time: 0.0068 seconds
-00:04.921 Request UID: 0b0c93b0-40ff-4694-9e55-298ac2bcbffb
-00:04.926 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
-00:04.926 Exiting getEncodedUserName()
-00:04.927 Exiting setup() with value "true"
-00:04.927 Getting system information...
-00:04.927 Entering getSystemInfo()
-00:04.927 Calling _bws.getSystemInfo()...
-00:05.454 ..._bws.getSystemInfo() returned "SUCCESS"
-00:05.454 Execution Time: 0.3789 seconds
-00:05.454 Request UID: 69df2baa-d628-4f0e-ab3e-805241b170b6
-00:05.455 _bws.getSystemInfo() returned the following properties:
-BWS Version: 12.0.0.0
-BAS Version: 12.0.0.0
+00:08.218 BWSUtil web service stub initialized
+00:08.275 Entering getAuthenticator()
+00:08.275 Calling _bwsUtil.getAuthenticators()...
+00:09.318 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:09.318 Execution Time: 0.1577 seconds
+00:09.319 Request UID: 76cac295-9b10-4d43-bf7e-fcfc69333f77
+00:09.319 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:09.319 Entering getEncodedUserName()
+00:09.320 Calling _bwsUtil.getEncodedUsername()...
+00:09.372 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:09.372 Execution Time: 0.0290 seconds
+00:09.372 Request UID: 7c807f9d-a11c-4bfc-8ab8-8d224b9b52eb
+00:09.378 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
+00:09.378 Exiting getEncodedUserName()
+00:09.379 Exiting setup() with value "true"
+00:09.379 Getting system information...
+00:09.379 Entering getSystemInfo()
+00:09.379 Calling _bws.getSystemInfo()...
+00:09.707 ..._bws.getSystemInfo() returned "SUCCESS"
+00:09.708 Execution Time: 0.2607 seconds
+00:09.708 Request UID: 0076f717-bdb5-43b3-814d-df5666ae1024
+00:09.709 _bws.getSystemInfo() returned the following properties:
+BWS Version: 12.5.1
+BAS Version: 12.5.1
+Core Version: 5.27.40
 Mail Platform: Unknown
-Authenticated User Uid: 9db9158c-0da3-4351-a53d-7890d3804be9
+Authenticated User Uid: 4faedd71-75dd-43a2-8f63-c3a8ccf157d7
 Supports PlayBook: No
 Email Address Is Mandatory: No
 Email Address Is Unique: Yes
@@ -41,54 +42,56 @@ Default Device Activation Type: BLACKBERRY_BALANCE
 Default Device Activation Type Platform Android: MDM_CONTROLS
 Default Device Activation Type Platform iOS: MDM_CONTROLS
 Default Device Activation Type Platform BlackBerry 10: BLACKBERRY_BALANCE
-Default Device Activation Type Platform Windows Phone: MDM_CONTROLS
+Default Device Activation Type Platform Windows: MDM_CONTROLS
+Default Device Activation Type Platform OS X: MDM_CONTROLS
+Default Device Activation Types Platform Android: MDM_CONTROLS
 Directory Is Configured: Yes
-External User Uid Field Name: uid
-External User Uid Field Name Directory Name LDAPName: uid
-External User Uid Field Name Directory Name ActiveDirectoryName: objectGUID
+External User Uid Field Name: objectGUID
+External User Uid Field Name Directory Name sdsx2k12: objectGUID
+External User Uid Field Name Directory Name sdsx2k10: objectGUID
 Device Activation Url: bcp://server.domain.example.net:443/tenant
-00:05.456 Exiting getSystemInfo() with value "true"
-00:05.456 Creating a user...
-00:05.456 Entering createUser()
-00:05.456 Email address set to "user02@example.net"
-00:05.456 Calling _bws.createUsers()...
-00:12.640 ..._bws.createUsers() returned "SUCCESS"
-00:12.640 Execution Time: 7.1482 seconds
-00:12.640 Request UID: 31b501f5-c52f-4344-9bf5-9e3944030583
-User created with UID "5a2e5850-df21-425d-b925-5960d7d8c1d2"
+00:09.713 Exiting getSystemInfo() with value "true"
+00:09.714 Creating a user...
+00:09.714 Entering createUser()
+00:09.714 Email address set to "user02@example.net"
+00:09.715 Calling _bws.createUsers()...
+00:11.302 ..._bws.createUsers() returned "SUCCESS"
+00:11.303 Execution Time: 1.5583 seconds
+00:11.304 Request UID: 775b5447-4609-4072-bf2e-45be4566ba04
+User created with UID "80fde5a7-7789-4a2c-b53e-b22bd7c22f74"
 Email address used in creation is "user02@example.net"
-00:12.640 Exiting createUser() with value "true"
-00:12.641 Displaying a user's details...
-00:12.641 Entering displayUserDetails()
-00:12.641 Displaying details for user with email address "user01@example.net"
-00:12.641 Entering getUser()
-00:12.641 Calling _bws.getUsers()...
-00:12.689 ..._bws.getUsers() returned "SUCCESS"
-00:12.689 Execution Time: 0.0250 seconds
-00:12.689 Request UID: 44ab519f-6ae4-4146-8766-f31fb7b5ae35
-00:12.690 Exiting getUser() with User object (UID "9db9158c-0da3-4351-a53d-7890d3804be9")
-00:12.690 Calling _bws.getUsersDetail()...
-00:13.200 ..._bws.getUsersDetail() returned "SUCCESS"
-00:13.201 Execution Time: 0.3486 seconds
-00:13.201 Request UID: a6647226-240f-4000-a6ea-65293730791c
+00:11.305 Exiting createUser() with value "true"
+00:11.306 Displaying a user's details...
+00:11.306 Entering displayUserDetails()
+00:11.307 Displaying details for user with email address ""user01@example.net"
+00:11.307 Entering getUser()
+00:11.308 Calling _bws.getUsers()...
+00:11.587 ..._bws.getUsers() returned "SUCCESS"
+00:11.588 Execution Time: 0.2311 seconds
+00:11.589 Request UID: 62c5d6e0-2ea0-4410-9c95-1d3098e56ba8
+00:11.590 Exiting getUser() with User object (UID "cc936c41-469c-4a55-8381-404d325900b1")
+00:11.590 Calling _bws.getUsersDetail()...
+00:12.664 ..._bws.getUsersDetail() returned "SUCCESS"
+00:12.664 Execution Time: 0.8030 seconds
+00:12.664 Request UID: 04a074dd-b994-4eb7-bfd5-d5ca94609023
 User details:
 Display Name: user01
-User UID: 9db9158c-0da3-4351-a53d-7890d3804be9
-Last Login Time: 11/04/2014 18:40:13
+User UID: cc936c41-469c-4a55-8381-404d325900b1
+Last Login Time: 10/21/2016 14:04:13
 Indirect IT policy names: Default
 User's device details:
 Device 1 data
 ---------------
 PIN: 12G34H56
-Model: Q10
+Model: Z10
 Serial Number: xxxxxxxxxxxx
 State: RUNNING
-Platform Version: 10.2.1
+Platform Version: 10.3.2.
 ---------------
 User's account details:
 Account 1 data
 ---------------
-Email Address: "user01@example.net"
+Email Address: user01@example.net
 ---------------
-00:13.202 Exiting displayUserDetails() with value "true"
+00:12.666 Exiting displayUserDetails() with value "true"
 Press Enter to exit
