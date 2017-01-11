@@ -12,9 +12,9 @@ All APIs shared in this repository are Open Source under the  [Apache 2.0 Licens
 - Samples for 10.2 have different sets of output for both BDS and UDS.
 - To run the AuthenticationSample.java app, make sure that the project also includes Krb5LoginModuleConfiguration.java and ServiceTicketGenerator.java as separate files.
 
-## 12.0 Samples
+## 12.x Samples
 
-IN BES12, SSO authentication is not supported. The AuthenticationSample apps still include this functionality for compatibility with BES 10.
+In BES12 and BlackBerry UEM, SSO authentication is not supported. The AuthenticationSample apps still include this functionality for compatibility with BES 10.
 
 ### C&#35;
 
