@@ -1,0 +1,95 @@
+00:00.000 Initializing web services...
+00:00.115 Entering Setup()
+00:00.115 Initializing BWS web service stub
+00:01.910 BWS web service stub initialized
+00:01.910 Initializing BWSUtil web service stub
+00:01.968 BWSUtil web service stub initialized
+00:01.969 Entering GetAuthenticator()
+00:01.969 Calling bwsUtilService.getAuthenticators()...
+00:03.434 ...bwsUtilService.getAuthenticators() returned "SUCCESS"
+00:03.436 Execution Time: 0.1122 seconds
+00:03.436 Request UID: 11faf32d-06b5-42f2-b2e6-b0db3c0aa28b
+00:03.437 Exiting GetAuthenticator() with Authenticator object (Name "BlackBerry
+ Administration Service")
+00:03.437 Entering GetEncodedUserName()
+00:03.438 Calling bwsUtilService.getEncodedUsername()...
+00:03.534 ...bwsUtilService.getEncodedUsername() returned "SUCCESS"
+00:03.536 Execution Time: 0.0167 seconds
+00:03.537 Request UID: 2a5fc59f-4e0a-4063-9b74-66ca2de5185c
+00:03.538 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
+00:03.539 Exiting GetEncodedUserName()
+00:03.540 Exiting Setup() with value "True"
+00:03.541 Getting system information...
+00:03.544 Entering GetSystemInfo()
+00:03.545 Calling bwsService.getSystemInfo()...
+00:03.856 ...bwsService.getSystemInfo() returned "SUCCESS"
+00:03.858 Execution Time: 0.1258 seconds
+00:03.859 Request UID: 0c4c6085-0cd5-4ac9-9f34-ee5f0d9c4a08
+00:03.860 bwsService.getSystemInfo() returned the following properties:
+BWS Version: 12.6.0
+BAS Version: 12.6.0
+Core Version: 5.30.37
+Mail Platform: Unknown
+Authenticated User Uid: 304b2df3-2965-47c3-8007-a14f1643c204
+Supports PlayBook: No
+Email Address Is Mandatory: No
+Email Address Is Unique: Yes
+External User Uid Is Searchable: Yes
+Default Device Activation Type: BLACKBERRY_BALANCE
+Default Device Activation Type Platform Android: MDM_CONTROLS
+Default Device Activation Type Platform iOS: MDM_CONTROLS
+Default Device Activation Type Platform BlackBerry 10: BLACKBERRY_BALANCE
+Default Device Activation Type Platform Windows: MDM_CONTROLS
+Default Device Activation Type Platform OS X: MDM_CONTROLS
+Default Device Activation Types Platform Android: MDM_CONTROLS
+Directory Is Configured: Yes
+External User Uid Field Name: objectGUID
+External User Uid Field Name Directory Name sdsx2k10: objectGUID
+External User Uid Field Name Directory Name sdsx2k12: objectGUID
+Device Activation Url: bcp://server.domain.example.net:443/tenant
+00:03.879 Exiting GetSystemInfo() with value "True"
+00:03.880 Creating a user...
+00:03.881 Entering CreateUser()
+00:03.882 Email address set to "user02@example.net"
+00:03.883 Calling bwsService.createUsers()...
+00:05.139 ...bwsService.createUsers() returned "SUCCESS"
+00:05.143 Execution Time: 1.1502 seconds
+00:05.146 Request UID: 158bce2b-a5ef-4489-af6e-a4b53dc0a657
+User created with UID "e2c57dc0-8633-4a08-bb92-d508c5037d93"
+Email address used in creation is "user02@example.net"
+00:05.150 Exiting CreateUser() with value "True"
+00:05.152 Displaying a user's details...
+00:05.156 Entering DisplayUserDetails()
+00:05.157 Displaying details for user with email address "user01@example.net"
+00:05.160 Entering GetUser()
+00:05.162 Calling bwsService.getUsers()...
+00:05.295 ...bwsService.getUsers() returned "SUCCESS"
+00:05.298 Execution Time: 0.0428 seconds
+00:05.300 Request UID: 3c1f03c9-0984-4b3a-9cad-b63f788bdb7f
+00:05.301 Exiting GetUser() with User object (UID "86798eac-38f4-4014-883e-b3387
+0e0fba1")
+00:05.303 Calling bwsService.getUsersDetail()...
+00:05.920 ...bwsService.getUsersDetail() returned "SUCCESS"
+00:05.921 Execution Time: 0.4025 seconds
+00:05.922 Request UID: e47aeb41-aba0-42a2-92de-84771654e9be
+User details:
+Display Name: user01
+User UID: 9db9158c-0da3-4351-a53d-7890d3804be9
+Last Login Time: 11/04/2014 18:40:13
+Indirect IT policy names: Default
+User's device details:
+Device 1 data
+---------------
+PIN: 12G34H56
+Model: Q10
+Serial Number: xxxxxxxxxxxx
+State: RUNNING
+Platform Version: 10.2.1
+---------------
+User's account details:
+Account 1 data
+---------------
+Email Address: "user01@example.net"
+---------------
+00:05.933 Exiting DisplayUserDetails() with value "True"
+Press Enter to exit
