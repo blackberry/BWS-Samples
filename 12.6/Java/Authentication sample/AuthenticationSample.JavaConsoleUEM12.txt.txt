@@ -1,0 +1,111 @@
+00:00.058 Attempting BlackBerry Administration Service authentication
+00:00.063 Initializing web services...
+00:00.064 Entering setup()
+00:00.064 Initializing BWS web service stub
+Jan 12, 2017 3:49:39 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:03.790 BWS web service stub initialized
+00:03.790 Initializing BWSUtil web service stub
+Jan 12, 2017 3:49:43 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:04.924 BWSUtil web service stub initialized
+00:04.993 Entering getAuthenticator()
+00:04.993 Calling _bwsUtil.getAuthenticators()...
+00:05.908 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:05.908 Execution Time: 0.1513 seconds
+00:05.909 Request UID: 2d949c7e-40da-4ada-b20a-4f348cf27dee
+00:05.909 Exiting getAuthenticator() with Authenticator object (Name "BlackBerry Administration Service")
+00:05.909 Entering getEncodedUserName()
+00:05.910 Calling _bwsUtil.getEncodedUsername()...
+00:05.971 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:05.971 Execution Time: 0.0373 seconds
+00:05.971 Request UID: 66ec16b9-0c63-4f33-aa1a-be2591043152
+00:05.979 Decoded value of encoded username "provider="LOCAL" tenant="tenant" username="username" "
+00:05.980 Exiting getEncodedUserName()
+00:05.980 Exiting setup() with value "true"
+00:05.981 Entering getSystemInfo()
+00:05.981 Calling _bws.getSystemInfo()...
+00:06.442 ..._bws.getSystemInfo() returned "SUCCESS"
+00:06.442 Execution Time: 0.3300 seconds
+00:06.442 Request UID: 15b3b738-caff-49f4-a759-dbe04808697c
+00:06.443 ServerType found: BES12
+00:06.443 Exiting getSystemInfo()
+00:06.443 Attempting authenticated BWS call to echo()...
+00:06.443 Entering echo()
+00:06.444 Calling _bws.echo()...
+00:06.558 ..._bws.echo() returned "SUCCESS"
+00:06.559 Execution Time: 0.0234 seconds
+00:06.559 Request UID: d82a453b-87ff-4492-a130-a347534d2875
+00:06.560 Exiting echo() with value "true"
+00:06.560 Authenticated call succeeded!
+00:06.561 
+00:06.561 Attempting Active Directory authentication
+00:06.561 Initializing web services...
+00:06.562 Entering setup()
+00:06.562 Initializing BWS web service stub
+Jan 12, 2017 3:49:45 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:06.644 BWS web service stub initialized
+00:06.645 Initializing BWSUtil web service stub
+Jan 12, 2017 3:49:45 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:06.666 BWSUtil web service stub initialized
+00:06.667 Entering getAuthenticator()
+00:06.667 Calling _bwsUtil.getAuthenticators()...
+00:06.816 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:06.817 Execution Time: 0.0768 seconds
+00:06.817 Request UID: 58a68629-50be-4420-8cf8-7d4e4cf65227
+00:06.818 Exiting getAuthenticator() with Authenticator object (Name "Active Directory")
+00:06.819 Entering getEncodedUserName()
+00:06.819 Calling _bwsUtil.getEncodedUsername()...
+00:06.861 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:06.862 Execution Time: 0.0163 seconds
+00:06.862 Request UID: 56ef66e6-a5bd-44c0-b5d2-67843c8678af
+00:06.863 Decoded value of encoded username "provider="ad" auth="ACTIVE_DIRECTORY" tenant="tenant" domain="server.domain.example.net" username="username" "
+00:06.863 Exiting getEncodedUserName()
+00:06.863 Exiting setup() with value "true"
+00:06.864 Attempting authenticated BWS call to echo()...
+00:06.864 Entering echo()
+00:06.864 Calling _bws.echo()...
+00:06.960 ..._bws.echo() returned "SUCCESS"
+00:06.960 Execution Time: 0.0127 seconds
+00:06.961 Request UID: 7fbaa206-5f8c-4967-a8e3-19a80112f071
+00:06.961 Exiting echo() with value "true"
+00:06.962 Authenticated call succeeded!
+00:06.962 
+00:06.963 Attempting LDAP authentication
+00:06.963 Initializing web services...
+00:06.964 Entering setup()
+00:06.964 Initializing BWS web service stub
+Jan 12, 2017 3:49:46 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSService from class com.rim.ws.enterprise.admin.BWS
+00:07.038 BWS web service stub initialized
+00:07.038 Initializing BWSUtil web service stub
+Jan 12, 2017 3:49:46 PM org.apache.cxf.wsdl.service.factory.ReflectionServiceFactoryBean buildServiceFromClass
+INFO: Creating Service {http://ws.rim.com/enterprise/admin}BWSUtilService from class com.rim.ws.enterprise.admin.BWSUtil
+00:07.051 BWSUtil web service stub initialized
+00:07.051 Entering getAuthenticator()
+00:07.051 Calling _bwsUtil.getAuthenticators()...
+00:07.157 ..._bwsUtil.getAuthenticators() returned "SUCCESS"
+00:07.157 Execution Time: 0.0608 seconds
+00:07.157 Request UID: 51b9a651-1465-4fd3-8ea5-2968e3366e57
+00:07.157 Exiting getAuthenticator() with Authenticator object (Name "LDAP")
+00:07.157 Entering getEncodedUserName()
+00:07.157 Calling _bwsUtil.getEncodedUsername()...
+00:07.182 ..._bwsUtil.getEncodedUsername() returned "SUCCESS"
+00:07.182 Execution Time: 0.0103 seconds
+00:07.182 Request UID: 51649f00-c6e7-426d-b09f-143ba64489b6
+00:07.182 Decoded value of encoded username "provider="ldap" auth="LDAP" tenant="tenant" username="username" "
+00:07.183 Exiting getEncodedUserName()
+00:07.183 Exiting setup() with value "true"
+00:07.183 Attempting authenticated BWS call to echo()...
+00:07.183 Entering echo()
+00:07.183 Calling _bws.echo()...
+00:07.721 ..._bws.echo() returned "SUCCESS"
+00:07.722 Execution Time: 0.0193 seconds
+00:07.723 Request UID: 663f58ab-03fb-4fa1-97f5-e94bb3ea28e2
+00:07.723 Exiting echo() with value "true"
+00:07.724 Authenticated call succeeded!
+00:07.724 
+Exiting sample.
+Press Enter to exit
