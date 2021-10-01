@@ -30,7 +30,7 @@ SampleBwsClient
 ### Java 
 
 AuthenticationSample
- - AuthenticationSample.java - Java code sample for authentication methods
+ - AuthenticationSample.java - Java code sample for the authentication methods
  - AuthenticationSample.ConsoleBES12.txt - Output for AuthenticationSample.java
  - Krb5LoginModuleConfiguration.java - A resource for AuthenticationSample.java
  - ServiceTicketGenerator.java - A resource for AuthenticationSample.java
